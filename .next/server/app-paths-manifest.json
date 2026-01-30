@@ -1,4 +1,16 @@
 {
+  "/(pages)/course/add-course/page": "app/(pages)/course/add-course/page.js",
+  "/(pages)/course/course-details/page": "app/(pages)/course/course-details/page.js",
+  "/(pages)/course/course-grid/page": "app/(pages)/course/course-grid/page.js",
   "/(pages)/home/page": "app/(pages)/home/page.js",
+  "/(pages)/instructor/instructor-announcements/page": "app/(pages)/instructor/instructor-announcements/page.js",
+  "/(pages)/instructor/instructor-course/page": "app/(pages)/instructor/instructor-course/page.js",
+  "/(pages)/instructor/instructor-dashboard/page": "app/(pages)/instructor/instructor-dashboard/page.js",
+  "/(pages)/instructor/instructor-profile/page": "app/(pages)/instructor/instructor-profile/page.js",
+  "/(pages)/instructor/instructor-quiz/page": "app/(pages)/instructor/instructor-quiz/page.js",
+  "/(pages)/instructor/instructor-statements/page": "app/(pages)/instructor/instructor-statements/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
   "/page": "app/page.js"
 }

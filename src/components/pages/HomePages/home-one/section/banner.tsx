@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ImageWithBasePath from '@/core/common/imageWithBasePath'
 import Link from 'next/link'
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -11,22 +11,38 @@ import "swiper/css/pagination";
 import "swiper/css/effect-cards";
 
 
+import api from '@/lib/api';
+
 const BannerSection = () => {
     const route = all_routes;
     const navigate = useRouter();
-      const [selectedItems, setSelectedItems] = useState(Array(4).fill(false));
-      const handleItemClick = (index: number) => {
+    const [config, setConfig] = useState<Record<string, string>>({});
+
+    useEffect(() => {
+        const fetchConfig = async () => {
+            try {
+                const res = await api.get('/config');
+                setConfig(res.data);
+            } catch (error) {
+                console.error('Failed to fetch config', error);
+            }
+        };
+        fetchConfig();
+    }, []);
+
+    const [selectedItems, setSelectedItems] = useState(Array(4).fill(false));
+    const handleItemClick = (index: number) => {
         setSelectedItems((prevSelectedItems) => {
-          const updatedSelectedItems = [...prevSelectedItems];
-          updatedSelectedItems[index] = !updatedSelectedItems[index];
-          return updatedSelectedItems;
+            const updatedSelectedItems = [...prevSelectedItems];
+            updatedSelectedItems[index] = !updatedSelectedItems[index];
+            return updatedSelectedItems;
         });
-      };
+    };
     const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault(); 
-        const Path = route.courseList; 
+        event.preventDefault();
+        const Path = route.courseList;
         navigate.push(Path);
-      };
+    };
 
     return (
         <>
@@ -56,10 +72,14 @@ const BannerSection = () => {
                     <div className="row align-items-center justify-content-between">
                         <div className="col-xl-7 col-lg-7">
                             <div className="banner-content pe-xxl-5">
-                                <span className="hero-title">The Leader in Online Learning</span>
+                                <span className="hero-title">{config.hero_title || "The Leader in Online Learning"}</span>
                                 <h1 className="mb-4 text-white">
-                                    Find the Best <span>Courses</span> from the Best{" "}
-                                    <span>Mentors</span> Around the World
+                                    {config.hero_description || (
+                                        <>
+                                            Find the Best <span>Courses</span> from the Best{" "}
+                                            <span>Mentors</span> Around the World
+                                        </>
+                                    )}
                                 </h1>
                                 <p className="fs-lg text-center text-md-start pb-2 pb-md-3 mb-4">
                                     Our specialized online courses are designed to bring the classroom
@@ -225,159 +245,159 @@ const BannerSection = () => {
                                                 </div>
                                             </div>
                                         </SwiperSlide>
-                                            <SwiperSlide />
-                                            <SwiperSlide>
-                                                <div className="swiper-slide">
-                                                    <div className="course-item course-item-two mb-0">
-                                                        <div className="course-img">
-                                                            <ImageWithBasePath
-                                                                src="/assets/img/course/course-25.jpg"
-                                                                alt="img"
-                                                                className="img-fluid"
-                                                            />
-                                                            <div className="position-absolute start-0 top-0 d-flex align-items-start w-100 z-index-2 p-2">
-                                                                <Link href="#" className={`fav-icon ${selectedItems[2] ? 'selected' : ''}`} onClick={() => handleItemClick(2)}>
-                                                                    <i className="isax isax-heart" />
-                                                                </Link>
+                                        <SwiperSlide />
+                                        <SwiperSlide>
+                                            <div className="swiper-slide">
+                                                <div className="course-item course-item-two mb-0">
+                                                    <div className="course-img">
+                                                        <ImageWithBasePath
+                                                            src="/assets/img/course/course-25.jpg"
+                                                            alt="img"
+                                                            className="img-fluid"
+                                                        />
+                                                        <div className="position-absolute start-0 top-0 d-flex align-items-start w-100 z-index-2 p-2">
+                                                            <Link href="#" className={`fav-icon ${selectedItems[2] ? 'selected' : ''}`} onClick={() => handleItemClick(2)}>
+                                                                <i className="isax isax-heart" />
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="brand-icon ms-auto"
+                                                            >
+                                                                <ImageWithBasePath
+                                                                    src="/assets/img/featured-courses/Clip-path-group.svg"
+                                                                    alt="img"
+                                                                    className="img-fluid"
+                                                                />
+                                                            </Link>
+                                                        </div>
+                                                    </div>
+                                                    <div className="content-course">
+                                                        <div className="d-flex justify-content-between mb-2">
+                                                            <div className="d-flex align-items-center">
                                                                 <Link
                                                                     href="#"
-                                                                    className="brand-icon ms-auto"
+                                                                    className="avatar avatar-sm"
                                                                 >
                                                                     <ImageWithBasePath
-                                                                        src="/assets/img/featured-courses/Clip-path-group.svg"
+                                                                        src="/assets/img/user/user-20.jpg"
                                                                         alt="img"
-                                                                        className="img-fluid"
+                                                                        className="img-fluid avatar avatar-sm rounded-circle"
                                                                     />
                                                                 </Link>
-                                                            </div>
-                                                        </div>
-                                                        <div className="content-course">
-                                                            <div className="d-flex justify-content-between mb-2">
-                                                                <div className="d-flex align-items-center">
+                                                                <div className="ms-2">
                                                                     <Link
                                                                         href="#"
-                                                                        className="avatar avatar-sm"
+                                                                        className="link-default fs-14"
                                                                     >
-                                                                        <ImageWithBasePath
-                                                                            src="/assets/img/user/user-20.jpg"
-                                                                            alt="img"
-                                                                            className="img-fluid avatar avatar-sm rounded-circle"
-                                                                        />
+                                                                        Edith Dorsey
                                                                     </Link>
-                                                                    <div className="ms-2">
-                                                                        <Link
-                                                                            href="#"
-                                                                            className="link-default fs-14"
-                                                                        >
-                                                                            Edith Dorsey
-                                                                        </Link>
-                                                                    </div>
                                                                 </div>
-                                                                <span className="badge badge-light rounded-pill bg-light d-inline-flex align-items-center fs-13 fw-medium">
-                                                                    Lifestyles
-                                                                </span>
                                                             </div>
-                                                            <h6 className="mb-2">
-                                                                <Link href={route.courseDetails}>
-                                                                    Build Creative Arts &amp; media Course Completed
-                                                                </Link>
+                                                            <span className="badge badge-light rounded-pill bg-light d-inline-flex align-items-center fs-13 fw-medium">
+                                                                Lifestyles
+                                                            </span>
+                                                        </div>
+                                                        <h6 className="mb-2">
+                                                            <Link href={route.courseDetails}>
+                                                                Build Creative Arts &amp; media Course Completed
+                                                            </Link>
+                                                        </h6>
+                                                        <p className="d-flex align-items-center mb-3">
+                                                            <i className="ti ti-star-filled text-warning me-2" />
+                                                            4.9 (178 Reviews)
+                                                        </p>
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <h6 className="text-secondary fs-16 fw-semi-bold mb-0">
+                                                                $190
                                                             </h6>
-                                                            <p className="d-flex align-items-center mb-3">
-                                                                <i className="ti ti-star-filled text-warning me-2" />
-                                                                4.9 (178 Reviews)
-                                                            </p>
-                                                            <div className="d-flex align-items-center justify-content-between">
-                                                                <h6 className="text-secondary fs-16 fw-semi-bold mb-0">
-                                                                    $190
-                                                                </h6>
-                                                                <Link
-                                                                    href={route.courseCart}
-                                                                    className="btn btn-dark btn-sm d-inline-flex align-items-center"
-                                                                >
-                                                                    Add to Cart
-                                                                    <i className="isax isax-arrow-right-3 ms-1" />
-                                                                </Link>
-                                                            </div>
+                                                            <Link
+                                                                href={route.courseCart}
+                                                                className="btn btn-dark btn-sm d-inline-flex align-items-center"
+                                                            >
+                                                                Add to Cart
+                                                                <i className="isax isax-arrow-right-3 ms-1" />
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </SwiperSlide>
-                                            <SwiperSlide>
-                                                <div className="swiper-slide">
-                                                    <div className="course-item course-item-two mb-0">
-                                                        <div className="course-img">
-                                                            <ImageWithBasePath
-                                                                src="/assets/img/course/course-24.jpg"
-                                                                alt="img"
-                                                                className="img-fluid"
-                                                            />
-                                                            <div className="position-absolute start-0 top-0 d-flex align-items-start w-100 z-index-2 p-2">
-                                                                <Link href="#" className={`fav-icon ${selectedItems[3] ? 'selected' : ''}`} onClick={() => handleItemClick(3)}>
-                                                                    <i className="isax isax-heart" />
-                                                                </Link>
+                                            </div>
+                                        </SwiperSlide>
+                                        <SwiperSlide>
+                                            <div className="swiper-slide">
+                                                <div className="course-item course-item-two mb-0">
+                                                    <div className="course-img">
+                                                        <ImageWithBasePath
+                                                            src="/assets/img/course/course-24.jpg"
+                                                            alt="img"
+                                                            className="img-fluid"
+                                                        />
+                                                        <div className="position-absolute start-0 top-0 d-flex align-items-start w-100 z-index-2 p-2">
+                                                            <Link href="#" className={`fav-icon ${selectedItems[3] ? 'selected' : ''}`} onClick={() => handleItemClick(3)}>
+                                                                <i className="isax isax-heart" />
+                                                            </Link>
+                                                            <Link
+                                                                href="#"
+                                                                className="brand-icon ms-auto"
+                                                            >
+                                                                <ImageWithBasePath
+                                                                    src="/assets/img/featured-courses/react.svg"
+                                                                    alt="img"
+                                                                    className="img-fluid"
+                                                                />
+                                                            </Link>
+                                                        </div>
+                                                    </div>
+                                                    <div className="content-course">
+                                                        <div className="d-flex justify-content-between mb-2">
+                                                            <div className="d-flex align-items-center">
                                                                 <Link
                                                                     href="#"
-                                                                    className="brand-icon ms-auto"
+                                                                    className="avatar avatar-sm"
                                                                 >
                                                                     <ImageWithBasePath
-                                                                        src="/assets/img/featured-courses/react.svg"
+                                                                        src="/assets/img/user/user-23.jpg"
                                                                         alt="img"
-                                                                        className="img-fluid"
+                                                                        className="img-fluid avatar avatar-sm rounded-circle"
                                                                     />
                                                                 </Link>
-                                                            </div>
-                                                        </div>
-                                                        <div className="content-course">
-                                                            <div className="d-flex justify-content-between mb-2">
-                                                                <div className="d-flex align-items-center">
+                                                                <div className="ms-2">
                                                                     <Link
                                                                         href="#"
-                                                                        className="avatar avatar-sm"
+                                                                        className="link-default fs-14"
                                                                     >
-                                                                        <ImageWithBasePath
-                                                                            src="/assets/img/user/user-23.jpg"
-                                                                            alt="img"
-                                                                            className="img-fluid avatar avatar-sm rounded-circle"
-                                                                        />
+                                                                        Calvin Johnsen
                                                                     </Link>
-                                                                    <div className="ms-2">
-                                                                        <Link
-                                                                            href="#"
-                                                                            className="link-default fs-14"
-                                                                        >
-                                                                            Calvin Johnsen
-                                                                        </Link>
-                                                                    </div>
                                                                 </div>
-                                                                <span className="badge badge-light rounded-pill bg-light d-inline-flex align-items-center fs-13 fw-medium">
-                                                                    Development
-                                                                </span>
                                                             </div>
-                                                            <h6 className="mb-2">
-                                                                <Link href={route.courseDetails}>
-                                                                    Learn &amp; Create ReactJS Tech Fundamentals Apps
-                                                                </Link>
+                                                            <span className="badge badge-light rounded-pill bg-light d-inline-flex align-items-center fs-13 fw-medium">
+                                                                Development
+                                                            </span>
+                                                        </div>
+                                                        <h6 className="mb-2">
+                                                            <Link href={route.courseDetails}>
+                                                                Learn &amp; Create ReactJS Tech Fundamentals Apps
+                                                            </Link>
+                                                        </h6>
+                                                        <p className="d-flex align-items-center mb-3">
+                                                            <i className="ti ti-star-filled text-warning me-2" />
+                                                            5.0 (154 Reviews)
+                                                        </p>
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <h6 className="text-secondary fs-16 fw-semi-bold mb-0">
+                                                                $147
                                                             </h6>
-                                                            <p className="d-flex align-items-center mb-3">
-                                                                <i className="ti ti-star-filled text-warning me-2" />
-                                                                5.0 (154 Reviews)
-                                                            </p>
-                                                            <div className="d-flex align-items-center justify-content-between">
-                                                                <h6 className="text-secondary fs-16 fw-semi-bold mb-0">
-                                                                    $147
-                                                                </h6>
-                                                                <Link
-                                                                    href={route.courseCart}
-                                                                    className="btn btn-dark btn-sm d-inline-flex align-items-center"
-                                                                >
-                                                                    Add to Cart
-                                                                    <i className="isax isax-arrow-right-3 ms-1" />
-                                                                </Link>
-                                                            </div>
+                                                            <Link
+                                                                href={route.courseCart}
+                                                                className="btn btn-dark btn-sm d-inline-flex align-items-center"
+                                                            >
+                                                                Add to Cart
+                                                                <i className="isax isax-arrow-right-3 ms-1" />
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </SwiperSlide>
+                                            </div>
+                                        </SwiperSlide>
                                     </Swiper>
                                 </div>
                             </div>

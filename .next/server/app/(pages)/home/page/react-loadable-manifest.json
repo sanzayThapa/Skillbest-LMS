@@ -2,9 +2,9 @@
   "[project]/node_modules/react-player/dist/index.js [app-client] (ecmascript, next/dynamic entry)": {
     "id": "[project]/node_modules/react-player/dist/index.js [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/node_modules_4ee5cf7d._.js",
+      "static/chunks/node_modules_05401324._.js",
       "static/chunks/node_modules_react-player_dist_689ec1e5._.js",
-      "static/chunks/node_modules_react-player_dist_index_859588a3.js"
+      "static/chunks/node_modules_react-player_dist_index_4542fb79.js"
     ]
   }
 }

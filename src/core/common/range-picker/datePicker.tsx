@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { DateRangePicker } from 'react-bootstrap-daterangepicker';
 import moment from 'moment';
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import 'bootstrap-daterangepicker';
 
 const PredefinedDateRanges: React.FC = () => {
   const [state, setState] = useState({
@@ -41,7 +42,7 @@ const PredefinedDateRanges: React.FC = () => {
       <div
         id="reportrange"
         className="form-control date-range bookingrange"
-      
+
       >
         {/* <i className="ti ti-calendar"></i>&nbsp; */}
         <span>{label}</span>

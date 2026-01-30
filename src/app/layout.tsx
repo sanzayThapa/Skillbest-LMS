@@ -4,6 +4,7 @@ import "@tabler/icons-webfont/dist/tabler-icons.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
 import "./globals.scss";
 import Script from "next/script";
+import { Providers } from "./providers";
 
 
 export const metadata = {
@@ -34,10 +35,11 @@ export default function RootLayout({
         <link rel="stylesheet" href="/assets/css/select2.min.css" />
         <link rel="stylesheet" href="/assets/css/owl.carousel.min.css" />
         <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
         <link rel="stylesheet" href="/assets/css/style.css" />
       </head>
       <body>
-        {children}
+        <Providers>{children}</Providers>
         <Script src="/assets/js/jquery-3.7.1.min.js" strategy="beforeInteractive" />
         <Script src="/assets/js/bootstrap.bundle.min.js" strategy="afterInteractive" />
         <Script src="/assets/js/jquery.meanmenu.min.js" strategy="afterInteractive" />
@@ -46,6 +48,7 @@ export default function RootLayout({
         <Script src="/assets/js/jquery.counterup.min.js" strategy="afterInteractive" />
         <Script src="/assets/js/owl.carousel.min.js" strategy="afterInteractive" />
         <Script src="/assets/js/select2.min.js" strategy="afterInteractive" />
+        <Script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" strategy="afterInteractive" />
         <Script src="/assets/js/script.js" strategy="afterInteractive" />
       </body>
     </html>

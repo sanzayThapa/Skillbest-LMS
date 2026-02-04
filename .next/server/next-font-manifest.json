@@ -1,6 +1,15 @@
 {
   "app": {
-    "[project]/src/app/admin/page": []
+    "[project]/src/app/(pages)/course/add-course/page": [],
+    "[project]/src/app/(pages)/home/page": [],
+    "[project]/src/app/(pages)/instructor/instructor-course/page": [],
+    "[project]/src/app/_not-found/page": [],
+    "[project]/src/app/admin/companies/page": [],
+    "[project]/src/app/admin/courses/[id]/page": [],
+    "[project]/src/app/admin/courses/new/page": [],
+    "[project]/src/app/admin/courses/page": [],
+    "[project]/src/app/admin/page": [],
+    "[project]/src/app/page": []
   },
   "appUsingSizeAdjust": true,
   "pages": {},

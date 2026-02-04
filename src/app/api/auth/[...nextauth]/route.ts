@@ -47,19 +47,15 @@ const handler = NextAuth({
     },
     callbacks: {
         async jwt({ token, user }: any) {
-            console.log('NextAuth JWT Callback - User:', user);
             if (user) {
                 token.role = user.role;
             }
-            console.log('NextAuth JWT Callback - Token:', token);
             return token;
         },
         async session({ session, token }: any) {
-            console.log('NextAuth Session Callback - Token:', token);
             if (session.user) {
                 (session.user as any).role = token.role;
             }
-            console.log('NextAuth Session Callback - Session:', session);
             return session;
         }
     }

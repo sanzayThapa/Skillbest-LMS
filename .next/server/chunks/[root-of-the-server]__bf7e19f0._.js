@@ -179,6 +179,24 @@ const handler = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules
     ],
     session: {
         strategy: "jwt"
+    },
+    callbacks: {
+        async jwt ({ token, user }) {
+            console.log('NextAuth JWT Callback - User:', user);
+            if (user) {
+                token.role = user.role;
+            }
+            console.log('NextAuth JWT Callback - Token:', token);
+            return token;
+        },
+        async session ({ session, token }) {
+            console.log('NextAuth Session Callback - Token:', token);
+            if (session.user) {
+                session.user.role = token.role;
+            }
+            console.log('NextAuth Session Callback - Session:', session);
+            return session;
+        }
     }
 });
 ;

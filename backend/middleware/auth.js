@@ -1,5 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../lib/prisma');
 
 const verifyAdmin = async (req, res, next) => {
     // In a real app, you would verify the JWT token from the Authorization header.

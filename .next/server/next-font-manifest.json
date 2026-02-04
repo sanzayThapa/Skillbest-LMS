@@ -1,18 +1,6 @@
 {
   "app": {
-    "[project]/src/app/(pages)/course/add-course/page": [],
-    "[project]/src/app/(pages)/course/course-details/page": [],
-    "[project]/src/app/(pages)/course/course-grid/page": [],
-    "[project]/src/app/(pages)/home/page": [],
-    "[project]/src/app/(pages)/instructor/instructor-announcements/page": [],
-    "[project]/src/app/(pages)/instructor/instructor-course/page": [],
-    "[project]/src/app/(pages)/instructor/instructor-dashboard/page": [],
-    "[project]/src/app/(pages)/instructor/instructor-profile/page": [],
-    "[project]/src/app/(pages)/instructor/instructor-quiz/page": [],
-    "[project]/src/app/(pages)/instructor/instructor-statements/page": [],
-    "[project]/src/app/_not-found/page": [],
-    "[project]/src/app/admin/page": [],
-    "[project]/src/app/page": []
+    "[project]/src/app/admin/page": []
   },
   "appUsingSizeAdjust": true,
   "pages": {},

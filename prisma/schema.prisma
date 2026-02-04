@@ -1,27 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -35,18 +34,20 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  role          String    @default("user") // "user" or "admin"
-  password      String?   // Hashed password
-  accounts      Account[]
-  sessions      Session[]
-  videos        Video[]
-  courses       Course[]
-  purchases     Purchase[]
+  id                    String              @id @default(cuid())
+  name                  String?
+  email                 String?             @unique
+  emailVerified         DateTime?
+  image                 String?
+  role                  String              @default("user")
+  password              String?
+  accounts              Account[]
+  instructorAssignments CompanyInstructor[] @relation("InstructorAssignments")
+  courses               Course[]
+  employee              Employee?
+  purchases             Purchase[]
+  sessions              Session[]
+  videos                Video[]
 }
 
 model VerificationToken {
@@ -69,34 +70,26 @@ model Video {
   user        User     @relation(fields: [userId], references: [id])
 }
 
-model SiteConfig {
-  id        String   @id @default(cuid())
-  key       String   @unique // e.g., "home_title", "home_description"
-  value     String?  @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-// ... existing models ...
-
 model Course {
-  id          String  @id @default(cuid())
-  userId      String
-  title       String  @db.Text
-  description String? @db.Text
-  imageUrl    String? @db.Text
-  price       Float?
-  isPublished Boolean @default(false)
-
-  categoryId String?
-  category   Category? @relation(fields: [categoryId], references: [id])
-
-  chapters    Chapter[]
-  attachments Attachment[]
-  purchases   Purchase[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String          @id @default(cuid())
+  userId         String
+  title          String
+  description    String?
+  imageUrl       String?
+  price          Float?
+  isPublished    Boolean         @default(false)
+  categoryId     String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  assessments    Assessment[]
+  attachments    Attachment[]
+  certificates   Certificate[]
+  chapters       Chapter[]
+  category       Category?       @relation(fields: [categoryId], references: [id])
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  enrollments    Enrollment[]
+  programCourses ProgramCourse[]
+  purchases      Purchase[]
 
   @@index([categoryId])
 }
@@ -108,69 +101,519 @@ model Category {
 }
 
 model Chapter {
-  id          String  @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
-  description String? @db.Text
-  videoUrl    String? @db.Text
+  description String?
+  videoUrl    String?
   position    Int
-  isPublished Boolean @default(false)
-  isFree      Boolean @default(false)
-
-  courseId String
-  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-
-  lessons Lesson[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isPublished Boolean  @default(false)
+  isFree      Boolean  @default(false)
+  courseId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons     Lesson[]
 
   @@index([courseId])
 }
 
 model Lesson {
-  id          String  @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
-  description String? @db.Text
-  videoUrl    String? @db.Text
+  description String?
+  videoUrl    String?
   position    Int
-  isPublished Boolean @default(false)
-  isFree      Boolean @default(false)
-
-  chapterId String
-  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isPublished Boolean  @default(false)
+  isFree      Boolean  @default(false)
+  chapterId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   @@index([chapterId])
 }
 
 model Attachment {
-  id   String @id @default(cuid())
-  name String
-  url  String @db.Text
-
-  courseId String
-  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  courseId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@index([courseId])
 }
 
 model Purchase {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  courseId String
-  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, courseId])
   @@index([courseId])
 }
 
+model Company {
+  id                String              @id @default(cuid())
+  name              String
+  slug              String              @unique
+  logo              String?
+  industry          String?
+  status            CompanyStatus       @default(ACTIVE)
+  contractStartDate DateTime?
+  contractEndDate   DateTime?
+  employeeLimit     Int?
+  allowedDomains    String[]
+  customDomain      String?
+  brandColor        String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  announcements     Announcement[]
+  instructors       CompanyInstructor[]
+  trainingPrograms  CompanyProgram[]
+  departments       Department[]
+  employees         Employee[]
+  jobRoles          JobRole[]
+  locations         Location[]
+  subscriptions     Subscription[]
+  teams             Team[]
+}
+
+model Department {
+  id          String     @id @default(cuid())
+  name        String
+  description String?
+  companyId   String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  company     Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employees   Employee[]
+  teams       Team[]
+
+  @@unique([companyId, name])
+  @@index([companyId])
+}
+
+model Team {
+  id           String      @id @default(cuid())
+  name         String
+  description  String?
+  companyId    String
+  departmentId String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  employees    Employee[]
+  company      Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  department   Department? @relation(fields: [departmentId], references: [id])
+
+  @@unique([companyId, name])
+  @@index([companyId])
+  @@index([departmentId])
+}
+
+model JobRole {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  level       String?
+  companyId   String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  employees   Employee[]
+  company     Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  programs    RoleProgram[]
+
+  @@unique([companyId, name])
+  @@index([companyId])
+}
+
+model Location {
+  id        String     @id @default(cuid())
+  name      String
+  address   String?
+  city      String?
+  country   String?
+  companyId String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  employees Employee[]
+  company   Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+}
+
+model Employee {
+  id                String             @id @default(cuid())
+  userId            String?            @unique
+  firstName         String
+  lastName          String
+  email             String             @unique
+  phone             String?
+  avatar            String?
+  employeeId        String?
+  companyId         String
+  departmentId      String?
+  teamId            String?
+  jobRoleId         String?
+  locationId        String?
+  managerId         String?
+  status            EmployeeStatus     @default(ACTIVE)
+  hireDate          DateTime?
+  terminationDate   DateTime?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  assessmentResults AssessmentResult[]
+  certificates      Certificate[]
+  company           Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  department        Department?        @relation(fields: [departmentId], references: [id])
+  jobRole           JobRole?           @relation(fields: [jobRoleId], references: [id])
+  location          Location?          @relation(fields: [locationId], references: [id])
+  manager           Employee?          @relation("ManagerReports", fields: [managerId], references: [id])
+  reports           Employee[]         @relation("ManagerReports")
+  team              Team?              @relation(fields: [teamId], references: [id])
+  user              User?              @relation(fields: [userId], references: [id])
+  enrollments       Enrollment[]
+
+  @@index([companyId])
+  @@index([departmentId])
+  @@index([teamId])
+  @@index([jobRoleId])
+  @@index([managerId])
+  @@index([email])
+}
+
+model TrainingProgram {
+  id              String           @id @default(cuid())
+  name            String
+  description     String?
+  type            ProgramType
+  version         String           @default("1.0")
+  isActive        Boolean          @default(true)
+  isMandatory     Boolean          @default(false)
+  validityPeriod  Int?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  companyPrograms CompanyProgram[]
+  enrollments     Enrollment[]
+  courses         ProgramCourse[]
+  rolePrograms    RoleProgram[]
+}
+
+model ProgramCourse {
+  id        String          @id @default(cuid())
+  programId String
+  courseId  String
+  order     Int
+  course    Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  program   TrainingProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@unique([programId, courseId])
+  @@index([programId])
+  @@index([courseId])
+}
+
+model CompanyProgram {
+  id        String          @id @default(cuid())
+  companyId String
+  programId String
+  dueDate   DateTime?
+  createdAt DateTime        @default(now())
+  company   Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  program   TrainingProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, programId])
+  @@index([companyId])
+  @@index([programId])
+}
+
+model RoleProgram {
+  id        String          @id @default(cuid())
+  jobRoleId String
+  programId String
+  jobRole   JobRole         @relation(fields: [jobRoleId], references: [id], onDelete: Cascade)
+  program   TrainingProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@unique([jobRoleId, programId])
+  @@index([jobRoleId])
+  @@index([programId])
+}
+
+model Enrollment {
+  id           String           @id @default(cuid())
+  employeeId   String
+  courseId     String?
+  programId    String?
+  assignedBy   String?
+  assignedDate DateTime         @default(now())
+  dueDate      DateTime?
+  status       EnrollmentStatus @default(NOT_STARTED)
+  startedAt    DateTime?
+  completedAt  DateTime?
+  progress     Float            @default(0)
+  isExempt     Boolean          @default(false)
+  exemptReason String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  course       Course?          @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  employee     Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  program      TrainingProgram? @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@index([employeeId])
+  @@index([courseId])
+  @@index([programId])
+  @@index([status])
+  @@index([dueDate])
+}
+
+model Assessment {
+  id           String             @id @default(cuid())
+  title        String
+  description  String?
+  courseId     String?
+  passingScore Float
+  maxAttempts  Int                @default(3)
+  timeLimit    Int?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  course       Course?            @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  results      AssessmentResult[]
+  questions    Question[]
+
+  @@index([courseId])
+}
+
+model Question {
+  id            String       @id @default(cuid())
+  assessmentId  String
+  question      String
+  type          QuestionType
+  options       Json?
+  correctAnswer String
+  points        Float        @default(1)
+  order         Int
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  assessment    Assessment   @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+}
+
+model AssessmentResult {
+  id            String     @id @default(cuid())
+  employeeId    String
+  assessmentId  String
+  score         Float
+  passed        Boolean
+  attemptNumber Int        @default(1)
+  answers       Json
+  completedAt   DateTime   @default(now())
+  assessment    Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  employee      Employee   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@index([employeeId])
+  @@index([assessmentId])
+}
+
+model Certificate {
+  id                String    @id @default(cuid())
+  employeeId        String
+  courseId          String?
+  certificateNumber String    @unique
+  issuedDate        DateTime  @default(now())
+  expiryDate        DateTime?
+  pdfUrl            String?
+  createdAt         DateTime  @default(now())
+  course            Course?   @relation(fields: [courseId], references: [id])
+  employee          Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@index([employeeId])
+  @@index([courseId])
+}
+
+model CompanyInstructor {
+  id           String   @id @default(cuid())
+  companyId    String
+  instructorId String
+  assignedAt   DateTime @default(now())
+  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  instructor   User     @relation("InstructorAssignments", fields: [instructorId], references: [id])
+
+  @@unique([companyId, instructorId])
+  @@index([companyId])
+  @@index([instructorId])
+}
+
+model Subscription {
+  id          String             @id @default(cuid())
+  companyId   String
+  planId      String
+  status      SubscriptionStatus @default(ACTIVE)
+  startDate   DateTime
+  endDate     DateTime?
+  renewalDate DateTime?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  invoices    Invoice[]
+  company     Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  plan        PricingPlan        @relation(fields: [planId], references: [id])
+
+  @@index([companyId])
+  @@index([planId])
+}
+
+model PricingPlan {
+  id            String         @id @default(cuid())
+  name          String
+  description   String?
+  price         Float
+  billingCycle  BillingCycle
+  employeeLimit Int?
+  features      Json
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  subscriptions Subscription[]
+}
+
+model Invoice {
+  id             String        @id @default(cuid())
+  subscriptionId String
+  invoiceNumber  String        @unique
+  amount         Float
+  status         InvoiceStatus @default(PENDING)
+  dueDate        DateTime
+  paidDate       DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  subscription   Subscription  @relation(fields: [subscriptionId], references: [id])
+
+  @@index([subscriptionId])
+  @@index([status])
+}
+
+model Announcement {
+  id          String           @id @default(cuid())
+  title       String
+  content     String
+  type        AnnouncementType
+  companyId   String?
+  publishDate DateTime
+  expiryDate  DateTime?
+  createdBy   String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  company     Company?         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@index([publishDate])
+}
+
+model NotificationTemplate {
+  id        String           @id @default(cuid())
+  name      String           @unique
+  subject   String
+  body      String
+  type      NotificationType
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  entity    String
+  entityId  String?
+  changes   Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([entity, entityId])
+  @@index([createdAt])
+}
+
+model SiteConfig {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum CompanyStatus {
+  ACTIVE
+  PAUSED
+  INACTIVE
+  TRIAL
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  INACTIVE
+  ON_LEAVE
+  TERMINATED
+}
+
+enum ProgramType {
+  MANDATORY
+  ROLE_BASED
+  COMPLIANCE
+  OPTIONAL
+  ONBOARDING
+}
+
+enum EnrollmentStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  OVERDUE
+  FAILED
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  TRUE_FALSE
+  SHORT_ANSWER
+  ESSAY
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+  EXPIRED
+}
+
+enum BillingCycle {
+  MONTHLY
+  QUARTERLY
+  ANNUALLY
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum AnnouncementType {
+  GENERAL
+  TRAINING
+  COMPLIANCE
+  SYSTEM
+}
+
+enum NotificationType {
+  TRAINING_REMINDER
+  DUE_DATE_ALERT
+  COMPLETION
+  ESCALATION
+  WELCOME
+}

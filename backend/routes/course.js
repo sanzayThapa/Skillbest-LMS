@@ -1,8 +1,7 @@
 const express = require('express');
-const { PrismaClient } = require('@prisma/client');
 const verifyAdmin = require('../middleware/auth'); // Reuse admin middleware or create specific one
 const router = express.Router();
-const prisma = new PrismaClient();
+const prisma = require('../lib/prisma');
 
 // Create a new course
 router.post('/', verifyAdmin, async (req, res) => {

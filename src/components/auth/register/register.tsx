@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Link from "next/link"
-import { useState } from "react";
 import ImageWithBasePath from "../../../core/common/imageWithBasePath";
 import { all_routes } from "@/router/all_routes";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
 const hasNumber = (value: string): boolean => {
@@ -31,18 +31,42 @@ const strengthColor = (count: number): string => {
 
 const RegisterComponent: React.FC = () => {
   const [eye, setEye] = useState<boolean>(true);
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [role, setRole] = useState<string>("student");
   const [validationError, setValidationError] = useState<number>(0);
   const [strength, setStrength] = useState<string>("");
   const [eyeConfirmPassword, setEyeConfirmPassword] = useState<boolean>(true);
+  const [loading, setLoading] = useState(false);
 
   const route = all_routes;
   const navigate = useRouter();
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const Path = route.login;
-    navigate.push(Path);
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await axios.post('/api/register', {
+        name,
+        email,
+        password,
+        role
+      });
+      alert("Registration successful! Please login.");
+      navigate.push(route.login);
+    } catch (error: any) {
+      console.error("Registration failed", error);
+      alert(error.response?.data || "Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
   };
   const onEyeClick = () => {
     setEye((prev) => !prev);
@@ -74,7 +98,6 @@ const RegisterComponent: React.FC = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     adaptiveHeight: true,
-    // autoplay: true, // Uncomment if needed
   };
 
   const messages = () => {
@@ -179,75 +202,19 @@ const RegisterComponent: React.FC = () => {
             {/* Login Banner */}
             <div className="col-md-6 login-bg d-none d-lg-flex">
               <Slider {...loginSLider} className="login-carousel">
-                <div>
-                  <div className="login-carousel-section mb-3">
-                    <div className="login-banner">
-                      <ImageWithBasePath
-                        src="/assets/img/auth/auth-1.svg"
-                        className="img-fluid"
-                        alt="Logo"
-                      />
-                    </div>
-                    <div className="mentor-course text-center">
-                      <h3 className="mb-2">
-                        Welcome to <br />
-                        Dreams<span className="text-secondary">LMS</span>{" "}
-                        Courses.
-                      </h3>
-                      <p>
-                        Platform designed to help organizations, educators, and
-                        learners manage, deliver, and track learning and
-                        training activities.
-                      </p>
+                {[1, 2, 3].map((_, idx) => (
+                  <div key={idx}>
+                    <div className="login-carousel-section mb-3">
+                      <div className="login-banner">
+                        <ImageWithBasePath src="/assets/img/auth/auth-1.svg" className="img-fluid" alt="Logo" />
+                      </div>
+                      <div className="mentor-course text-center">
+                        <h3 className="mb-2">Welcome to <br />Dreams<span className="text-secondary">LMS</span> Courses.</h3>
+                        <p>Platform designed to help organizations, educators, and learners manage, deliver, and track learning and training activities.</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <div className="login-carousel-section mb-3">
-                    <div className="login-banner">
-                      <ImageWithBasePath
-                        src="/assets/img/auth/auth-1.svg"
-                        className="img-fluid"
-                        alt="Logo"
-                      />
-                    </div>
-                    <div className="mentor-course text-center">
-                      <h3 className="mb-2">
-                        Welcome to <br />
-                        Dreams<span className="text-secondary">LMS</span>{" "}
-                        Courses.
-                      </h3>
-                      <p>
-                        Platform designed to help organizations, educators, and
-                        learners manage, deliver, and track learning and
-                        training activities.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div className="login-carousel-section mb-3">
-                    <div className="login-banner">
-                      <ImageWithBasePath
-                        src="/assets/img/auth/auth-1.svg"
-                        className="img-fluid"
-                        alt="Logo"
-                      />
-                    </div>
-                    <div className="mentor-course text-center">
-                      <h3 className="mb-2">
-                        Welcome to <br />
-                        Dreams<span className="text-secondary">LMS</span>{" "}
-                        Courses.
-                      </h3>
-                      <p>
-                        Platform designed to help organizations, educators, and
-                        learners manage, deliver, and track learning and
-                        training activities.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </Slider>
             </div>
             {/* /Login Banner */}
@@ -276,6 +243,7 @@ const RegisterComponent: React.FC = () => {
                           <input
                             type="text"
                             className="form-control form-control-lg"
+                            value={name} onChange={(e) => setName(e.target.value)} required
                           />
                           <span>
                             <i className="isax isax-user input-icon text-gray-7 fs-14" />
@@ -290,12 +258,28 @@ const RegisterComponent: React.FC = () => {
                           <input
                             type="email"
                             className="form-control form-control-lg"
+                            value={email} onChange={(e) => setEmail(e.target.value)} required
                           />
                           <span>
                             <i className="isax isax-sms input-icon text-gray-7 fs-14" />
                           </span>
                         </div>
                       </div>
+
+                      <div className="mb-3">
+                        <label className="form-label">I am a<span className="text-danger ms-1">*</span></label>
+                        <div className="d-flex gap-3">
+                          <div className="form-check">
+                            <input className="form-check-input" type="radio" name="role" id="role-student" value="student" checked={role === 'student'} onChange={() => setRole('student')} />
+                            <label className="form-check-label" htmlFor="role-student">Student</label>
+                          </div>
+                          <div className="form-check">
+                            <input className="form-check-input" type="radio" name="role" id="role-instructor" value="instructor" checked={role === 'instructor'} onChange={() => setRole('instructor')} />
+                            <label className="form-check-label" htmlFor="role-instructor">Instructor</label>
+                          </div>
+                        </div>
+                      </div>
+
                       <div className="mb-3 position-relative">
                         <label className="form-label">
                           New Password <span className="text-danger"> *</span>
@@ -305,28 +289,27 @@ const RegisterComponent: React.FC = () => {
                             className="form-control pass-input"
                             type={eye ? "password" : "text"}
                             onChange={handlePasswordChange}
+                            value={password} required
                           />
                           <span
                             onClick={onEyeClick}
-                            className={`toggle-passwords text-gray-7 fs-14 isax isax-eye-slash" ${
-                              eye ? "isax-eye-slash" : "isax-eye"
-                            }`}
+                            className={`toggle-passwords text-gray-7 fs-14 isax ${eye ? "isax-eye-slash" : "isax-eye"
+                              }`}
                           />
                         </div>
                         <div
                           id="passwordStrength"
                           style={{ display: "flex" }}
-                          className={`password-strength ${
-                            strength === "poor"
+                          className={`password-strength ${strength === "poor"
                               ? "poor-active"
                               : strength === "weak"
-                              ? "avg-active"
-                              : strength === "strong"
-                              ? "strong-active"
-                              : strength === "heavy"
-                              ? "heavy-active"
-                              : ""
-                          }`}
+                                ? "avg-active"
+                                : strength === "strong"
+                                  ? "strong-active"
+                                  : strength === "heavy"
+                                    ? "heavy-active"
+                                    : ""
+                            }`}
                         >
                           <span id="poor" className="active"></span>
                           <span id="weak" className="active"></span>
@@ -346,11 +329,11 @@ const RegisterComponent: React.FC = () => {
                             className="pass-inputa form-control form-control-lg"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
                           />
                           <span
-                            className={`isax toggle-passworda ${
-                              eyeConfirmPassword ? "isax-eye-slash" : "isax-eye"
-                            } text-gray-7 fs-14`}
+                            className={`isax toggle-passworda ${eyeConfirmPassword ? "isax-eye-slash" : "isax-eye"
+                              } text-gray-7 fs-14`}
                             onClick={() =>
                               setEyeConfirmPassword((prev) => !prev)
                             }
@@ -364,65 +347,16 @@ const RegisterComponent: React.FC = () => {
                           />
                         </div>
                       </div>
-                      <div className="d-flex align-items-center justify-content-between mb-4">
-                        <div className="remember-me d-flex align-items-center">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            defaultValue=""
-                            id="flexCheckDefault"
-                          />
-                          <label
-                            className="form-check-label mb-0 d-inline-flex remember-me fs-14"
-                            htmlFor="flexCheckDefault"
-                          >
-                            I agree with{" "}
-                            <Link
-                              href={route.termsConditions}
-                              className="link-2 mx-2"
-                            >
-                              Terms of Service
-                            </Link>{" "}
-                            and{" "}
-                            <Link
-                              href={route.privacyPolicy}
-                              className="link-2 mx-2"
-                            >
-                              Privacy Policy
-                            </Link>
-                          </label>
-                        </div>
-                      </div>
                       <div className="d-grid">
                         <button
                           className="btn btn-secondary btn-lg"
                           type="submit"
+                          disabled={loading}
                         >
-                          Sign Up <i className="isax isax-arrow-right-3 ms-1" />
+                          {loading ? "Creating Account..." : <>Sign Up <i className="isax isax-arrow-right-3 ms-1" /></>}
                         </button>
                       </div>
                     </form>
-                    <div className="d-flex align-items-center justify-content-center or fs-14 mb-3">
-                      Or
-                    </div>
-                    <div className="d-flex align-items-center justify-content-center mb-3">
-                      <Link href="#" className="btn btn-light me-2">
-                        <ImageWithBasePath
-                          src="/assets/img/icons/google.svg"
-                          alt="img"
-                          className="me-2"
-                        />
-                        Google
-                      </Link>
-                      <Link href="#" className="btn btn-light">
-                        <ImageWithBasePath
-                          src="/assets/img/icons/facebook.svg"
-                          alt="img"
-                          className="me-2"
-                        />
-                        Facebook
-                      </Link>
-                    </div>
                     <div className="fs-14 fw-normal d-flex align-items-center justify-content-center">
                       Already you have an account?
                       <Link href={route.login} className="link-2 ms-1">

@@ -1,10 +1,18 @@
 {
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/register/page": "app/(auth)/register/page.js",
   "/(pages)/course/course-details/page": "app/(pages)/course/course-details/page.js",
   "/(pages)/home/page": "app/(pages)/home/page.js",
+  "/(pages)/instructor/instructor-dashboard/page": "app/(pages)/instructor/instructor-dashboard/page.js",
+  "/(pages)/instructor/instructor-profile/page": "app/(pages)/instructor/instructor-profile/page.js",
+  "/(pages)/instructor/instructor-settings/page": "app/(pages)/instructor/instructor-settings/page.js",
+  "/(pages)/student/student-dashboard/page": "app/(pages)/student/student-dashboard/page.js",
   "/_not-found/page": "app/_not-found/page.js",
   "/admin/courses/[id]/page": "app/admin/courses/[id]/page.js",
   "/admin/courses/page": "app/admin/courses/page.js",
   "/admin/page": "app/admin/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/register/route": "app/api/register/route.js",
+  "/api/user-profile/route": "app/api/user-profile/route.js",
   "/page": "app/page.js"
 }

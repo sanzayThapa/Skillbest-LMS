@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ImageWithBasePath from "../../../core/common/imageWithBasePath";
 import { all_routes } from "@/router/all_routes";
-type PasswordField = "password" | "confirmPassword";
 import dynamic from "next/dynamic";
+import { signIn } from "next-auth/react";
+
+type PasswordField = "password" | "confirmPassword";
 const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
 const LoginComponent = () => {
@@ -23,6 +25,10 @@ const LoginComponent = () => {
     confirmPassword: false,
   });
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const togglePasswordVisibility = (field: PasswordField) => {
     setPasswordVisibility((prevState) => ({
       ...prevState,
@@ -31,12 +37,48 @@ const LoginComponent = () => {
   };
 
   const route = all_routes;
-  const navigate = useRouter();
-  const handleSubmit = (event: React.FormEvent) => {
-      event.preventDefault(); 
-      const Path = route.homeone; 
-      navigate.push(Path);
-    };
+  const router = useRouter();
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (result?.error) {
+      alert("Invalid email or password");
+      setLoading(false);
+    } else {
+      // Fetch session to check role
+      // Since we can't easily get the session synchronously here without reloading, 
+      // we can either force a reload or check the /api/auth/session endpoint.
+      // Or simpler: rely on the middleware or layout to redirect if already logged in? 
+      // But for explicit redirect after login:
+
+      // Let's do a quick fetch to get the role
+      const sessionRes = await fetch("/api/auth/session");
+      const sessionData = await sessionRes.json();
+
+      if (sessionData?.user) {
+        const role = (sessionData.user as any).role || "student";
+        if (role === 'admin') {
+          router.push('/admin/dashboard');
+        } else if (role === 'instructor') {
+          router.push(route.instructorDashboard);
+        } else {
+          router.push(route.studentDashboard);
+        }
+      } else {
+        // Fallback
+        router.push(route.studentDashboard);
+      }
+    }
+  };
+
   return (
     <>
       {/* Main Wrapper */}
@@ -46,75 +88,19 @@ const LoginComponent = () => {
             {/* Login Banner */}
             <div className="col-md-6 login-bg d-none d-lg-flex">
               <Slider {...loginSLider} className="login-carousel">
-                <div>
-                  <div className="login-carousel-section mb-3">
-                    <div className="login-banner">
-                      <ImageWithBasePath
-                        src="/assets/img/auth/auth-1.svg"
-                        className="img-fluid"
-                        alt="Logo"
-                      />
-                    </div>
-                    <div className="mentor-course text-center">
-                      <h3 className="mb-2">
-                        Welcome to <br />
-                        Dreams<span className="text-secondary">LMS</span>{" "}
-                        Courses.
-                      </h3>
-                      <p>
-                        Platform designed to help organizations, educators, and
-                        learners manage, deliver, and track learning and
-                        training activities.
-                      </p>
+                {[1, 2, 3].map((_, i) => (
+                  <div key={i}>
+                    <div className="login-carousel-section mb-3">
+                      <div className="login-banner">
+                        <ImageWithBasePath src="/assets/img/auth/auth-1.svg" className="img-fluid" alt="Logo" />
+                      </div>
+                      <div className="mentor-course text-center">
+                        <h3 className="mb-2">Welcome to <br />Dreams<span className="text-secondary">LMS</span> Courses.</h3>
+                        <p>Platform designed to help organizations, educators, and learners manage, deliver, and track learning and training activities.</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <div className="login-carousel-section mb-3">
-                    <div className="login-banner">
-                      <ImageWithBasePath
-                        src="/assets/img/auth/auth-1.svg"
-                        className="img-fluid"
-                        alt="Logo"
-                      />
-                    </div>
-                    <div className="mentor-course text-center">
-                      <h3 className="mb-2">
-                        Welcome to <br />
-                        Dreams<span className="text-secondary">LMS</span>{" "}
-                        Courses.
-                      </h3>
-                      <p>
-                        Platform designed to help organizations, educators, and
-                        learners manage, deliver, and track learning and
-                        training activities.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div className="login-carousel-section mb-3">
-                    <div className="login-banner">
-                      <ImageWithBasePath
-                        src="/assets/img/auth/auth-1.svg"
-                        className="img-fluid"
-                        alt="Logo"
-                      />
-                    </div>
-                    <div className="mentor-course text-center">
-                      <h3 className="mb-2">
-                        Welcome to <br />
-                        Dreams<span className="text-secondary">LMS</span>{" "}
-                        Courses.
-                      </h3>
-                      <p>
-                        Platform designed to help organizations, educators, and
-                        learners manage, deliver, and track learning and
-                        training activities.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </Slider>
             </div>
             {/* /Login Banner */}
@@ -145,6 +131,7 @@ const LoginComponent = () => {
                           <input
                             type="email"
                             className="form-control form-control-lg"
+                            value={email} onChange={(e) => setEmail(e.target.value)} required
                           />
                           <span>
                             <i className="isax isax-sms input-icon text-gray-7 fs-14" />
@@ -161,15 +148,15 @@ const LoginComponent = () => {
                               passwordVisibility.password ? "text" : "password"
                             }
                             className="form-control form-control-lg pass-input"
+                            value={password} onChange={(e) => setPassword(e.target.value)} required
                           />
                           <span
-                            className={`isax toggle-passwords fs-14 ${
-                              passwordVisibility.password
+                            className={`isax toggle-passwords fs-14 ${passwordVisibility.password
                                 ? "isax-eye"
                                 : "isax-eye-slash"
-                            }`}
+                              }`}
                             onClick={() => togglePasswordVisibility("password")}
-                          ></span>
+                          />
                         </div>
                       </div>
                       <div className="d-flex align-items-center justify-content-between mb-4">
@@ -197,8 +184,9 @@ const LoginComponent = () => {
                         <button
                           className="btn btn-secondary btn-lg"
                           type="submit"
+                          disabled={loading}
                         >
-                          Login <i className="isax isax-arrow-right-3 ms-1" />
+                          {loading ? "Logging in..." : <>Login <i className="isax isax-arrow-right-3 ms-1" /></>}
                         </button>
                       </div>
                     </form>

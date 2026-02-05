@@ -108,12 +108,17 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$router$2f$all_routes$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/router/all_routes.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$core$2f$common$2f$imageWithBasePath$2f$index$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/core/common/imageWithBasePath/index.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next-auth/react/index.js [app-ssr] (ecmascript)");
+"use client";
 "use client";
 ;
 ;
 ;
 ;
+;
 const ProfileCard = ()=>{
+    const { data: session } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSession"])();
+    const userName = session?.user?.name || "Instructor";
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "instructor-profile",
         children: [
@@ -125,13 +130,13 @@ const ProfileCard = ()=>{
                     alt: ""
                 }, void 0, false, {
                     fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                    lineNumber: 10,
-                    columnNumber: 7
+                    lineNumber: 15,
+                    columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                lineNumber: 9,
-                columnNumber: 5
+                lineNumber: 14,
+                columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "row align-items-center row-gap-3",
@@ -149,8 +154,8 @@ const ProfileCard = ()=>{
                                             alt: "img"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                            lineNumber: 20,
-                                            columnNumber: 13
+                                            lineNumber: 25,
+                                            columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "verify-tick",
@@ -158,71 +163,71 @@ const ProfileCard = ()=>{
                                                 className: "isax isax-verify5"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                                lineNumber: 22,
-                                                columnNumber: 15
+                                                lineNumber: 27,
+                                                columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                            lineNumber: 21,
-                                            columnNumber: 13
+                                            lineNumber: 26,
+                                            columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                    lineNumber: 19,
-                                    columnNumber: 11
+                                    lineNumber: 24,
+                                    columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h5", {
                                             className: "mb-1 text-white d-inline-flex align-items-center",
                                             children: [
-                                                "Eugene Andre",
+                                                userName,
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                                    href: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$router$2f$all_routes$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["all_routes"].instructorProfile,
+                                                    href: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$router$2f$all_routes$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["all_routes"].instructorsettings,
                                                     className: "link-light fs-16 ms-2",
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
                                                         className: "isax isax-edit-2"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                                        lineNumber: 32,
-                                                        columnNumber: 17
+                                                        lineNumber: 37,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                                    lineNumber: 28,
-                                                    columnNumber: 15
+                                                    lineNumber: 33,
+                                                    columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                            lineNumber: 26,
-                                            columnNumber: 13
+                                            lineNumber: 31,
+                                            columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-light",
                                             children: "Instructor"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                            lineNumber: 35,
-                                            columnNumber: 13
+                                            lineNumber: 40,
+                                            columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                    lineNumber: 25,
-                                    columnNumber: 11
+                                    lineNumber: 30,
+                                    columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                            lineNumber: 18,
-                            columnNumber: 9
+                            lineNumber: 23,
+                            columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                        lineNumber: 17,
-                        columnNumber: 7
+                        lineNumber: 22,
+                        columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "col-md-6",
@@ -235,8 +240,8 @@ const ProfileCard = ()=>{
                                     children: "Add New Course"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                    lineNumber: 41,
-                                    columnNumber: 11
+                                    lineNumber: 46,
+                                    columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     href: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$router$2f$all_routes$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["all_routes"].studentDashboard,
@@ -244,30 +249,30 @@ const ProfileCard = ()=>{
                                     children: "Student Dashboard"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                                    lineNumber: 44,
-                                    columnNumber: 11
+                                    lineNumber: 49,
+                                    columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                            lineNumber: 40,
-                            columnNumber: 9
+                            lineNumber: 45,
+                            columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                        lineNumber: 39,
-                        columnNumber: 7
+                        lineNumber: 44,
+                        columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-                lineNumber: 16,
-                columnNumber: 5
+                lineNumber: 21,
+                columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/pages/Instructor/common/profileCard.tsx",
-        lineNumber: 8,
+        lineNumber: 13,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -368,7 +373,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$core$2f$common$2f$dat
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$router$2f$all_routes$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/router/all_routes.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next-auth/react/index.js [app-ssr] (ecmascript)");
 "use client";
+;
 ;
 ;
 ;
@@ -387,8 +394,8 @@ const InstructorSidebar = ()=>{
                         children: "Main Menu"
                     }, void 0, false, {
                         fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                        lineNumber: 13,
-                        columnNumber: 9
+                        lineNumber: 14,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
                         className: "mb-3 pb-1",
@@ -401,38 +408,38 @@ const InstructorSidebar = ()=>{
                                             className: `${menu.icon} me-2`
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                                            lineNumber: 21,
-                                            columnNumber: 15
+                                            lineNumber: 22,
+                                            columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         menu.title
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                                    lineNumber: 17,
-                                    columnNumber: 13
+                                    lineNumber: 18,
+                                    columnNumber: 17
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, index, false, {
                                 fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                                lineNumber: 16,
-                                columnNumber: 13
+                                lineNumber: 17,
+                                columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)))
                     }, void 0, false, {
                         fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                        lineNumber: 14,
-                        columnNumber: 9
+                        lineNumber: 15,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("hr", {}, void 0, false, {
                         fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                        lineNumber: 28,
-                        columnNumber: 9
+                        lineNumber: 29,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h6", {
                         className: "mb-3",
                         children: "Account Settings"
                     }, void 0, false, {
                         fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                        lineNumber: 29,
-                        columnNumber: 9
+                        lineNumber: 30,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
                         children: [
@@ -445,65 +452,66 @@ const InstructorSidebar = ()=>{
                                             className: "isax isax-setting-25 me-2"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                                            lineNumber: 36,
-                                            columnNumber: 15
+                                            lineNumber: 37,
+                                            columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         "Settings"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                                    lineNumber: 32,
-                                    columnNumber: 13
+                                    lineNumber: 33,
+                                    columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                                lineNumber: 31,
-                                columnNumber: 11
+                                lineNumber: 32,
+                                columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                    href: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$router$2f$all_routes$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["all_routes"].login,
+                                    href: "#",
+                                    onClick: ()=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["signOut"])(),
                                     className: "d-inline-flex align-items-center",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
                                             className: "isax isax-logout5 me-2"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                                            lineNumber: 45,
-                                            columnNumber: 15
+                                            lineNumber: 47,
+                                            columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         "Logout"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                                    lineNumber: 41,
-                                    columnNumber: 13
+                                    lineNumber: 42,
+                                    columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                                lineNumber: 40,
-                                columnNumber: 11
+                                lineNumber: 41,
+                                columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                        lineNumber: 30,
-                        columnNumber: 9
+                        lineNumber: 31,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-                lineNumber: 12,
-                columnNumber: 7
+                lineNumber: 13,
+                columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0))
         }, void 0, false, {
             fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-            lineNumber: 11,
-            columnNumber: 5
+            lineNumber: 12,
+            columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/src/components/pages/Instructor/common/instructorSidebar.tsx",
-        lineNumber: 10,
+        lineNumber: 11,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -521,21 +529,31 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$core$2f$common$2f$Bre
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$pages$2f$Instructor$2f$common$2f$profileCard$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/pages/Instructor/common/profileCard.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$pages$2f$Instructor$2f$common$2f$instructorSidebar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/pages/Instructor/common/instructorSidebar.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next-auth/react/index.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$router$2f$all_routes$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/router/all_routes.tsx [app-ssr] (ecmascript)");
 "use client";
 ;
 ;
 ;
 ;
 ;
+;
+;
 const InstructorProfileComponent = ()=>{
+    const { data: session } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSession"])();
+    const user = session?.user;
+    // Helper to safely get name parts
+    const fullName = user?.name || "Instructor";
+    const [firstName, ...lastNameParts] = fullName.split(" ");
+    const lastName = lastNameParts.join(" ");
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$core$2f$common$2f$Breadcrumb$2f$breadcrumb$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 title: "My Profile"
             }, void 0, false, {
                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                lineNumber: 10,
-                columnNumber: 5
+                lineNumber: 21,
+                columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "content",
@@ -544,16 +562,16 @@ const InstructorProfileComponent = ()=>{
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$pages$2f$Instructor$2f$common$2f$profileCard$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                            lineNumber: 13,
-                            columnNumber: 9
+                            lineNumber: 24,
+                            columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "row",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$pages$2f$Instructor$2f$common$2f$instructorSidebar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                    lineNumber: 16,
-                                    columnNumber: 9
+                                    lineNumber: 27,
+                                    columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "col-lg-9",
@@ -566,29 +584,29 @@ const InstructorProfileComponent = ()=>{
                                                     children: "My Profile"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                    lineNumber: 20,
-                                                    columnNumber: 13
+                                                    lineNumber: 31,
+                                                    columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                                    href: "#",
+                                                    href: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$router$2f$all_routes$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["all_routes"].instructorsettings,
                                                     className: "edit-profile-icon",
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
                                                         className: "isax isax-edit-2"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                        lineNumber: 22,
-                                                        columnNumber: 15
+                                                        lineNumber: 33,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                    lineNumber: 21,
-                                                    columnNumber: 13
+                                                    lineNumber: 32,
+                                                    columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                            lineNumber: 19,
-                                            columnNumber: 11
+                                            lineNumber: 30,
+                                            columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "card",
@@ -600,8 +618,8 @@ const InstructorProfileComponent = ()=>{
                                                         children: "Basic Information"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                        lineNumber: 27,
-                                                        columnNumber: 15
+                                                        lineNumber: 38,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "row",
@@ -615,26 +633,26 @@ const InstructorProfileComponent = ()=>{
                                                                             children: "First Name"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 31,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 42,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            children: "Eugene"
+                                                                            children: firstName
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 32,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 43,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 30,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 41,
+                                                                    columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 29,
-                                                                columnNumber: 17
+                                                                lineNumber: 40,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "col-md-4",
@@ -645,26 +663,26 @@ const InstructorProfileComponent = ()=>{
                                                                             children: "Last Name"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 37,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 48,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            children: "Andre"
+                                                                            children: lastName
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 38,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 49,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 36,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 47,
+                                                                    columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 35,
-                                                                columnNumber: 17
+                                                                lineNumber: 46,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "col-md-4",
@@ -675,26 +693,26 @@ const InstructorProfileComponent = ()=>{
                                                                             children: "Registration Date"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 43,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 54,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            children: "16 Jan 2024, 11:15 AM"
+                                                                            children: "N/A"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 44,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 55,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 42,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 53,
+                                                                    columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 41,
-                                                                columnNumber: 17
+                                                                lineNumber: 52,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "col-md-4",
@@ -705,26 +723,26 @@ const InstructorProfileComponent = ()=>{
                                                                             children: "User Name"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 49,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 60,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            children: "instructordemo"
+                                                                            children: user?.name || "N/A"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 50,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 61,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 48,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 59,
+                                                                    columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 47,
-                                                                columnNumber: 17
+                                                                lineNumber: 58,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "col-md-4",
@@ -735,26 +753,26 @@ const InstructorProfileComponent = ()=>{
                                                                             children: "Phone Number"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 55,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 66,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            children: "89104-71829"
+                                                                            children: "N/A"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 56,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 67,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 54,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 65,
+                                                                    columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 53,
-                                                                columnNumber: 17
+                                                                lineNumber: 64,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "col-md-4",
@@ -765,26 +783,26 @@ const InstructorProfileComponent = ()=>{
                                                                             children: "Email"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 61,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 72,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            children: "instructordemo@example.com"
+                                                                            children: user?.email || "N/A"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 62,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 73,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 60,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 71,
+                                                                    columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 59,
-                                                                columnNumber: 17
+                                                                lineNumber: 70,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "col-md-4",
@@ -795,26 +813,26 @@ const InstructorProfileComponent = ()=>{
                                                                             children: "Gender"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 67,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 78,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            children: "Male"
+                                                                            children: "N/A"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 68,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 79,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 66,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 77,
+                                                                    columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 65,
-                                                                columnNumber: 17
+                                                                lineNumber: 76,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "col-md-4",
@@ -825,26 +843,26 @@ const InstructorProfileComponent = ()=>{
                                                                             children: "DOB"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 73,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 84,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            children: "16 Jan 2020"
+                                                                            children: "N/A"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 74,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 85,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 72,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 83,
+                                                                    columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 71,
-                                                                columnNumber: 17
+                                                                lineNumber: 82,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "col-md-4",
@@ -855,26 +873,26 @@ const InstructorProfileComponent = ()=>{
                                                                             children: "Age"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 79,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 90,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            children: "24"
+                                                                            children: "N/A"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 80,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 91,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 78,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 89,
+                                                                    columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 77,
-                                                                columnNumber: 17
+                                                                lineNumber: 88,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "col-md-12",
@@ -884,43 +902,43 @@ const InstructorProfileComponent = ()=>{
                                                                             children: "Bio"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 85,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 96,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            children: "I am a web developer with a vast array of knowledge in many different front end and back end languages, responsive frameworks, databases, and best code practices."
+                                                                            children: "N/A"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 86,
-                                                                            columnNumber: 21
+                                                                            lineNumber: 97,
+                                                                            columnNumber: 25
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 84,
-                                                                    columnNumber: 19
+                                                                    lineNumber: 95,
+                                                                    columnNumber: 23
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 83,
-                                                                columnNumber: 17
+                                                                lineNumber: 94,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                        lineNumber: 28,
-                                                        columnNumber: 15
+                                                        lineNumber: 39,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                lineNumber: 26,
-                                                columnNumber: 13
+                                                lineNumber: 37,
+                                                columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                            lineNumber: 25,
-                                            columnNumber: 11
+                                            lineNumber: 36,
+                                            columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "card",
@@ -932,118 +950,33 @@ const InstructorProfileComponent = ()=>{
                                                         children: "Education"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                        lineNumber: 98,
-                                                        columnNumber: 15
+                                                        lineNumber: 107,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "education-flow",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "ps-4 pb-3 timeline-flow",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h6", {
-                                                                            className: "mb-1",
-                                                                            children: "BCA - Bachelor of Computer Applications"
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 102,
-                                                                            columnNumber: 21
-                                                                        }, ("TURBOPACK compile-time value", void 0)),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            children: "International University - (2004 - 2010)"
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 103,
-                                                                            columnNumber: 21
-                                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 101,
-                                                                    columnNumber: 19
-                                                                }, ("TURBOPACK compile-time value", void 0))
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 100,
-                                                                columnNumber: 17
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "ps-4 pb-3 timeline-flow",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h6", {
-                                                                            className: "mb-1",
-                                                                            children: "MCA - Master of Computer Application"
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 108,
-                                                                            columnNumber: 21
-                                                                        }, ("TURBOPACK compile-time value", void 0)),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            children: "International University - (2010 - 2012)"
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 109,
-                                                                            columnNumber: 21
-                                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 107,
-                                                                    columnNumber: 19
-                                                                }, ("TURBOPACK compile-time value", void 0))
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 106,
-                                                                columnNumber: 17
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "ps-4 pb-0 timeline-flow",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h6", {
-                                                                            className: "mb-1",
-                                                                            children: "Design Communication Visual"
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 114,
-                                                                            columnNumber: 21
-                                                                        }, ("TURBOPACK compile-time value", void 0)),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            children: "International University - (2012-2015)"
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                            lineNumber: 115,
-                                                                            columnNumber: 21
-                                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 113,
-                                                                    columnNumber: 19
-                                                                }, ("TURBOPACK compile-time value", void 0))
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 112,
-                                                                columnNumber: 17
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                            children: "No education details added yet."
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
+                                                            lineNumber: 109,
+                                                            columnNumber: 21
+                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    }, void 0, false, {
                                                         fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                        lineNumber: 99,
-                                                        columnNumber: 15
+                                                        lineNumber: 108,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                lineNumber: 97,
-                                                columnNumber: 13
+                                                lineNumber: 106,
+                                                columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                            lineNumber: 96,
-                                            columnNumber: 11
+                                            lineNumber: 105,
+                                            columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "card mb-0",
@@ -1055,134 +988,49 @@ const InstructorProfileComponent = ()=>{
                                                         children: "Experience"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                        lineNumber: 123,
-                                                        columnNumber: 15
+                                                        lineNumber: 115,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "d-flex align-items-center mb-4",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "bg-light border avatar avatar-lg text-gray-9 flex-shrink-0 me-3",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
-                                                                    className: "isax isax-briefcase fw-bold"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 126,
-                                                                    columnNumber: 19
-                                                                }, ("TURBOPACK compile-time value", void 0))
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 125,
-                                                                columnNumber: 17
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                children: [
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h6", {
-                                                                        className: "mb-1",
-                                                                        children: "Web Design & Development Team Leader"
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                        lineNumber: 129,
-                                                                        columnNumber: 19
-                                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                        children: "Creative Agency - (2013 - 2016)"
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                        lineNumber: 130,
-                                                                        columnNumber: 19
-                                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 128,
-                                                                columnNumber: 17
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        children: "No experience details added yet."
+                                                    }, void 0, false, {
                                                         fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                        lineNumber: 124,
-                                                        columnNumber: 15
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "d-flex align-items-center",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "bg-light border avatar avatar-lg text-gray-9 flex-shrink-0 me-3",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
-                                                                    className: "isax isax-briefcase fw-bold"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                    lineNumber: 135,
-                                                                    columnNumber: 19
-                                                                }, ("TURBOPACK compile-time value", void 0))
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 134,
-                                                                columnNumber: 17
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                children: [
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h6", {
-                                                                        className: "mb-1",
-                                                                        children: "Project Manager"
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                        lineNumber: 138,
-                                                                        columnNumber: 19
-                                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                        children: "CJobcy Technology Pvt.Ltd - (Present)"
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                        lineNumber: 139,
-                                                                        columnNumber: 19
-                                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                                lineNumber: 137,
-                                                                columnNumber: 17
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                        lineNumber: 133,
-                                                        columnNumber: 15
+                                                        lineNumber: 116,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                                lineNumber: 122,
-                                                columnNumber: 13
+                                                lineNumber: 114,
+                                                columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                            lineNumber: 121,
-                                            columnNumber: 11
+                                            lineNumber: 113,
+                                            columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                                    lineNumber: 18,
-                                    columnNumber: 9
+                                    lineNumber: 29,
+                                    columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                            lineNumber: 14,
-                            columnNumber: 9
+                            lineNumber: 25,
+                            columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                    lineNumber: 12,
-                    columnNumber: 7
+                    lineNumber: 23,
+                    columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/pages/Instructor/instructor-profile/instructorProfile.tsx",
-                lineNumber: 11,
-                columnNumber: 5
+                lineNumber: 22,
+                columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true);

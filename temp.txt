@@ -1,0 +1,9 @@
+✅ Backend: Express + Node.js
+✅ Database: PostgreSQL (free and reliable)
+✅ ORM: Prisma (developer-friendly)
+✅ Auth: NextAuth (works with Next.js) or Firebase Auth
+Video hosting : Bunny.net
+
+instructor login: 
+email: sanzaythapa9860@gmail
+pwd: sanjaythapa9860!

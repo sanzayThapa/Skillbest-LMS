@@ -1,7 +1,13 @@
 {
   "app": {
+    "[project]/src/app/(auth)/login/page": [],
+    "[project]/src/app/(auth)/register/page": [],
     "[project]/src/app/(pages)/course/course-details/page": [],
     "[project]/src/app/(pages)/home/page": [],
+    "[project]/src/app/(pages)/instructor/instructor-dashboard/page": [],
+    "[project]/src/app/(pages)/instructor/instructor-profile/page": [],
+    "[project]/src/app/(pages)/instructor/instructor-settings/page": [],
+    "[project]/src/app/(pages)/student/student-dashboard/page": [],
     "[project]/src/app/_not-found/page": [],
     "[project]/src/app/admin/courses/[id]/page": [],
     "[project]/src/app/admin/courses/page": [],

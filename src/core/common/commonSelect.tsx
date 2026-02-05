@@ -11,7 +11,8 @@ export interface OptionType {
 
 interface CustomDropdownProps {
   options: OptionType[];
-  defaultValue?: OptionType; // Change to expect an object
+  defaultValue?: OptionType;
+  value?: OptionType; // Added value prop
   className?: string;
   placeholder?: string;
   modal?: boolean;
@@ -21,6 +22,7 @@ interface CustomDropdownProps {
 const CustomSelect: React.FC<CustomDropdownProps> = ({
   options,
   defaultValue,
+  value, // Destructure value
   className,
   placeholder,
   modal,
@@ -35,7 +37,8 @@ const CustomSelect: React.FC<CustomDropdownProps> = ({
 
   return (
     <Select
-      defaultValue={defaultValue} // Pass the object directly
+      defaultValue={defaultValue}
+      value={value} // Pass value to Select
       className={className}
       placeholder={placeholder ? placeholder : 'Select'}
       style={{ width: '100%' }}

@@ -1,7 +1,8 @@
 {
+  "/(pages)/course/course-details/page": "app/(pages)/course/course-details/page.js",
   "/(pages)/home/page": "app/(pages)/home/page.js",
   "/_not-found/page": "app/_not-found/page.js",
-  "/admin/courses/new/page": "app/admin/courses/new/page.js",
+  "/admin/courses/[id]/page": "app/admin/courses/[id]/page.js",
   "/admin/courses/page": "app/admin/courses/page.js",
   "/admin/page": "app/admin/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",

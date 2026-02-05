@@ -110,11 +110,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2
 ;
 ;
 const { Option } = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$select$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Select$3e$__["Select"];
-const CustomSelect = ({ options, defaultValue, className, placeholder, modal })=>{
+const CustomSelect = ({ options, defaultValue, value, className, placeholder, modal, onChange })=>{
     // Determine the popup container based on the `modal` prop
     const getPopupContainer = modal ? ()=>document.getElementsByClassName('modal')[0] || document.body : undefined;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$select$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Select$3e$__["Select"], {
         defaultValue: defaultValue,
+        value: value,
         className: className,
         placeholder: placeholder ? placeholder : 'Select',
         style: {
@@ -122,17 +123,18 @@ const CustomSelect = ({ options, defaultValue, className, placeholder, modal })=
         },
         getPopupContainer: getPopupContainer,
         labelInValue: true,
+        onChange: onChange,
         children: options.map((option)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Option, {
                 value: option.value,
                 children: option.label
             }, option.value, false, {
                 fileName: "[project]/src/core/common/commonSelect.tsx",
-                lineNumber: 44,
+                lineNumber: 50,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)))
     }, void 0, false, {
         fileName: "[project]/src/core/common/commonSelect.tsx",
-        lineNumber: 35,
+        lineNumber: 39,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -241,15 +243,15 @@ const CourseLevel = [
 ];
 const Language = [
     {
-        label: 'French',
+        label: 'Nepali',
         value: '1'
     },
     {
-        label: 'German',
+        label: 'English',
         value: '2'
     },
     {
-        label: 'Arabic',
+        label: 'Hindi',
         value: '3'
     }
 ];

@@ -60,6 +60,13 @@ const Datatable = (param)=>{
     const [searchText, setSearchText] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [showSearch, setShowSearch] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const [filteredDataSource, setFilteredDataSource] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(dataSource);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Datatable.useEffect": ()=>{
+            setFilteredDataSource(dataSource);
+        }
+    }["Datatable.useEffect"], [
+        dataSource
+    ]);
     const handleSearch = (value)=>{
         setSearchText(value);
         const filteredData = dataSource.filter((record)=>Object.values(record).some((field)=>String(field).toLowerCase().includes(value.toLowerCase())));
@@ -88,33 +95,33 @@ const Datatable = (param)=>{
                         className: "fas fa-angle-right"
                     }, void 0, false, {
                         fileName: "[project]/src/core/common/dataTable/index.tsx",
-                        lineNumber: 43,
-                        columnNumber: 25
+                        lineNumber: 46,
+                        columnNumber: 29
                     }, void 0)
                 }, void 0, false, {
                     fileName: "[project]/src/core/common/dataTable/index.tsx",
-                    lineNumber: 43,
-                    columnNumber: 19
+                    lineNumber: 46,
+                    columnNumber: 23
                 }, void 0),
                 prevIcon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
                         className: "fas fa-angle-left"
                     }, void 0, false, {
                         fileName: "[project]/src/core/common/dataTable/index.tsx",
-                        lineNumber: 44,
-                        columnNumber: 25
+                        lineNumber: 47,
+                        columnNumber: 29
                     }, void 0)
                 }, void 0, false, {
                     fileName: "[project]/src/core/common/dataTable/index.tsx",
-                    lineNumber: 44,
-                    columnNumber: 19
+                    lineNumber: 47,
+                    columnNumber: 23
                 }, void 0),
                 showTotal: (total, range)=>"Page ".concat(range[0], " of ").concat(total)
             }
         }, void 0, false, {
             fileName: "[project]/src/core/common/dataTable/index.tsx",
-            lineNumber: 35,
-            columnNumber: 7
+            lineNumber: 38,
+            columnNumber: 9
         }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -128,13 +135,13 @@ const Datatable = (param)=>{
                                     className: "isax isax-search-normal-14"
                                 }, void 0, false, {
                                     fileName: "[project]/src/core/common/dataTable/index.tsx",
-                                    lineNumber: 52,
-                                    columnNumber: 7
+                                    lineNumber: 55,
+                                    columnNumber: 17
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/core/common/dataTable/index.tsx",
-                                lineNumber: 51,
-                                columnNumber: 5
+                                lineNumber: 54,
+                                columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                 type: "search",
@@ -145,19 +152,19 @@ const Datatable = (param)=>{
                                 "aria-controls": "DataTables_Table_0"
                             }, void 0, false, {
                                 fileName: "[project]/src/core/common/dataTable/index.tsx",
-                                lineNumber: 54,
-                                columnNumber: 5
+                                lineNumber: 57,
+                                columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/core/common/dataTable/index.tsx",
-                        lineNumber: 50,
-                        columnNumber: 3
+                        lineNumber: 53,
+                        columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/src/core/common/dataTable/index.tsx",
-                    lineNumber: 49,
-                    columnNumber: 5
+                    lineNumber: 52,
+                    columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$table$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Table$3e$__["Table"], {
                     className: "table datanew dataTable no-footer",
@@ -173,43 +180,43 @@ const Datatable = (param)=>{
                                 className: "fas fa-angle-right"
                             }, void 0, false, {
                                 fileName: "[project]/src/core/common/dataTable/index.tsx",
-                                lineNumber: 64,
-                                columnNumber: 27
+                                lineNumber: 67,
+                                columnNumber: 31
                             }, void 0)
                         }, void 0, false, {
                             fileName: "[project]/src/core/common/dataTable/index.tsx",
-                            lineNumber: 64,
-                            columnNumber: 21
+                            lineNumber: 67,
+                            columnNumber: 25
                         }, void 0),
                         prevIcon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("i", {
                                 className: "fas fa-angle-left"
                             }, void 0, false, {
                                 fileName: "[project]/src/core/common/dataTable/index.tsx",
-                                lineNumber: 65,
-                                columnNumber: 27
+                                lineNumber: 68,
+                                columnNumber: 31
                             }, void 0)
                         }, void 0, false, {
                             fileName: "[project]/src/core/common/dataTable/index.tsx",
-                            lineNumber: 65,
-                            columnNumber: 21
+                            lineNumber: 68,
+                            columnNumber: 25
                         }, void 0),
                         showTotal: (total, range)=>"Page ".concat(range[0], " of ").concat(total)
                     }
                 }, void 0, false, {
                     fileName: "[project]/src/core/common/dataTable/index.tsx",
-                    lineNumber: 57,
-                    columnNumber: 3
+                    lineNumber: 60,
+                    columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true)
     }, void 0, false, {
         fileName: "[project]/src/core/common/dataTable/index.tsx",
-        lineNumber: 31,
+        lineNumber: 34,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(Datatable, "07K1c6FLo80jldt+gzBtv891fdc=");
+_s(Datatable, "vumQemdrc7pzQ6hGo1FtP1b/wSQ=");
 _c = Datatable;
 const __TURBOPACK__default__export__ = Datatable;
 var _c;

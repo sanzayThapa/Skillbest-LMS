@@ -80,9 +80,7 @@ router.post('/', verifyAdmin, async (req, res) => {
 // Get all courses (for instructor/admin)
 router.get('/', verifyAdmin, async (req, res) => {
     try {
-        const whereClause = req.user ? { userId: req.user.id } : {};
         const courses = await prisma.course.findMany({
-            where: whereClause,
             orderBy: { createdAt: 'desc' },
         });
         res.json(courses);

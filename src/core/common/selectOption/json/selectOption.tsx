@@ -22,9 +22,9 @@ export const CourseLevel = [
   { label: 'Expert', value: '4' },
 ];
 export const Language = [
-  { label: 'French', value: '1' },
-  { label: 'German', value: '2' },
-  { label: 'Arabic', value: '3' },
+  { label: 'Nepali', value: '1' },
+  { label: 'English', value: '2' },
+  { label: 'Hindi', value: '3' },
 ];
 export const PrivateCourse = [
   { label: 'Private', value: '1' },

@@ -15,6 +15,7 @@ const AdminCourseEditPage = () => {
     const [course, setCourse] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [uploading, setUploading] = useState({ image: false, video: false });
     const [activeTab, setActiveTab] = useState("Basic Info");
     const [categories, setCategories] = useState<any[]>([]);
     const [newCategoryName, setNewCategoryName] = useState("");
@@ -27,6 +28,8 @@ const AdminCourseEditPage = () => {
         imageUrl: "",
         categoryId: "",
         level: "Beginner",
+        videoUrl: "",
+        videoType: "External",
         language: "English",
         requirements: [] as string[],
         faq: [] as any[],
@@ -48,6 +51,8 @@ const AdminCourseEditPage = () => {
                     description: c.description || "",
                     price: c.price?.toString() || "0",
                     imageUrl: c.imageUrl || "",
+                    videoUrl: c.videoUrl || "",
+                    videoType: c.videoUrl?.includes("youtube.com") || c.videoUrl?.includes("youtu.be") ? "Youtube" : "External",
                     categoryId: c.categoryId || "",
                     level: c.level || "Beginner",
                     language: c.language || "English",
@@ -93,16 +98,25 @@ const AdminCourseEditPage = () => {
         }
     };
 
-    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'image' | 'video') => {
         const file = e.target.files?.[0];
         if (!file) return;
+
+        setUploading({ ...uploading, [type]: true });
         const fd = new FormData();
         fd.append('file', file);
+
         try {
-            const { data } = await api.post('/upload', fd);
-            setFormData({ ...formData, imageUrl: data.url });
+            const { data } = await api.post('/upload', fd, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            if (type === 'image') setFormData(prev => ({ ...prev, imageUrl: data.url }));
+            else setFormData(prev => ({ ...prev, videoUrl: data.url }));
         } catch (error) {
             console.error("Upload failed", error);
+            alert("Upload failed. Please try again.");
+        } finally {
+            setUploading({ ...uploading, [type]: false });
         }
     };
 
@@ -174,13 +188,52 @@ const AdminCourseEditPage = () => {
                             </div>
                             <div className="col-md-5">
                                 <label className="form-label fw-medium text-center d-block">Thumbnail</label>
-                                <div className="border border-2 border-dashed rounded-3 p-4 bg-light text-center position-relative overflow-hidden aspect-video d-flex align-items-center justify-content-center" style={{ minHeight: '200px' }}>
-                                    {formData.imageUrl ? (
+                                <div className="border border-2 border-dashed rounded-3 p-4 bg-light text-center position-relative overflow-hidden aspect-video d-flex flex-column align-items-center justify-content-center" style={{ minHeight: '200px' }}>
+                                    {uploading.image ? (
+                                        <div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div>
+                                    ) : formData.imageUrl ? (
                                         <img src={formData.imageUrl} alt="Thumbnail" className="img-fluid rounded w-100 h-100 object-fit-cover position-absolute" />
                                     ) : (
                                         <div className="text-muted"><i className="ti ti-image fs-1 d-block mb-2" /><span>Upload Image</span></div>
                                     )}
-                                    <input type="file" className="position-absolute w-100 h-100 opacity-0 cursor-pointer" onChange={handleFileUpload} accept="image/*" />
+                                    <input type="file" className="position-absolute w-100 h-100 opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'image')} accept="image/*" />
+                                </div>
+                                <div className="mt-4">
+                                    <label className="form-label fw-medium">Intro Video Source</label>
+                                    <div className="d-flex gap-3 mb-3">
+                                        <button
+                                            className={`btn btn-sm ${formData.videoType === 'Youtube' ? 'btn-primary' : 'btn-outline-primary'}`}
+                                            onClick={() => setFormData({ ...formData, videoType: 'Youtube' })}
+                                        >YouTube Link</button>
+                                        <button
+                                            className={`btn btn-sm ${formData.videoType === 'External' ? 'btn-primary' : 'btn-outline-primary'}`}
+                                            onClick={() => setFormData({ ...formData, videoType: 'External' })}
+                                        >Self Hosted</button>
+                                    </div>
+
+                                    {formData.videoType === 'Youtube' ? (
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="https://www.youtube.com/watch?v=..."
+                                            value={formData.videoUrl}
+                                            onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+                                        />
+                                    ) : (
+                                        <div className="border p-3 rounded bg-light text-center">
+                                            {uploading.video ? (
+                                                <div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div>
+                                            ) : (
+                                                <>
+                                                    {formData.videoUrl && <p className="text-success text-sm mb-2"><i className="ti ti-check" /> Video Uploaded</p>}
+                                                    <label className="btn btn-outline-secondary btn-sm w-100 mb-0">
+                                                        {formData.videoUrl ? "Change Video File" : "Upload Video File"}
+                                                        <input type="file" className="d-none" onChange={(e) => handleFileUpload(e, 'video')} accept="video/*" />
+                                                    </label>
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

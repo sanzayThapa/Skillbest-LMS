@@ -31,9 +31,9 @@ app.get('/', (req, res) => {
 app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
 // Routes
-app.use('/api', siteConfigRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api', siteConfigRoutes);
 app.use('/api/companies', companiesRoutes);
 app.use('/api/employees', employeesRoutes);
 app.use('/api/organization', organizationRoutes);

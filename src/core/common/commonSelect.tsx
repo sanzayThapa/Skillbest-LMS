@@ -15,6 +15,7 @@ interface CustomDropdownProps {
   className?: string;
   placeholder?: string;
   modal?: boolean;
+  onChange?: (value: any) => void;
 }
 
 const CustomSelect: React.FC<CustomDropdownProps> = ({
@@ -23,22 +24,24 @@ const CustomSelect: React.FC<CustomDropdownProps> = ({
   className,
   placeholder,
   modal,
+  onChange,
 }) => {
   // Determine the popup container based on the `modal` prop
   const getPopupContainer = modal
     ? () =>
-        (document.getElementsByClassName('modal')[0] as HTMLElement) ||
-        document.body
+      (document.getElementsByClassName('modal')[0] as HTMLElement) ||
+      document.body
     : undefined;
 
   return (
     <Select
       defaultValue={defaultValue} // Pass the object directly
       className={className}
-      placeholder={placeholder? placeholder:'Select'}
+      placeholder={placeholder ? placeholder : 'Select'}
       style={{ width: '100%' }}
       getPopupContainer={getPopupContainer}
       labelInValue // Required for handling objects in `defaultValue` and `onChange`
+      onChange={onChange}
     >
       {options.map((option) => (
         <Option key={option.value} value={option.value}>

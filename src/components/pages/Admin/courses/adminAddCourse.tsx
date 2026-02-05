@@ -1,988 +1,368 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link';
 import CustomSelect from '@/core/common/commonSelect';
-import { CourseCategory, CourseLevel, CourseVideo, Language, PrivateCourse } from '@/core/common/selectOption/json/selectOption';
+import { CourseLevel, CourseVideo, Language, PrivateCourse } from '@/core/common/selectOption/json/selectOption';
 import DefaultEditor from "react-simple-wysiwyg";
-
 import { all_routes } from '@/router/all_routes';
 import ImageWithBasePath from '@/core/common/imageWithBasePath';
 import VideoModal from '@/components/pages/HomePages/home-one/section/videoModal';
+import api from '@/lib/api';
+import { useRouter } from 'next/navigation';
 
 const AdminAddCourseComponent = () => {
-
-    const route = all_routes
+    const route = all_routes;
+    const router = useRouter();
     const [currentStep, setCurrentStep] = useState(1);
-    const handleNext = () => {
-        setCurrentStep(currentStep + 1);
+    const [loading, setLoading] = useState(false);
+    const [categories, setCategories] = useState<any[]>([]);
+    const [newCategoryName, setNewCategoryName] = useState("");
+
+    // Form State
+    const [courseData, setCourseData] = useState({
+        title: "",
+        categoryId: "",
+        level: "Beginner",
+        language: "English",
+        maxStudents: "100",
+        isPublic: true,
+        shortDescription: "",
+        description: "",
+        learningItems: ["Become a UX designer"],
+        requirements: [""],
+        isFeatured: false,
+        imageUrl: "",
+        videoUrl: "",
+        videoType: "External",
+        price: "0",
+        isFree: true,
+        faq: [{ question: "", answer: "" }],
+        chapters: [] as any[]
+    });
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const fetchCategories = async () => {
+        try {
+            const { data } = await api.get('/courses/meta/categories');
+            setCategories(data.map((c: any) => ({ label: c.name, value: c.id })));
+        } catch (error) {
+            console.error("Failed to fetch categories", error);
+        }
     };
 
-    const handlePrev = () => {
-        setCurrentStep(currentStep - 1);
+    const handleAddCategory = async () => {
+        if (!newCategoryName) return;
+        try {
+            const { data } = await api.post('/courses/meta/categories', { name: newCategoryName });
+            setCategories([...categories, { label: data.name, value: data.id }]);
+            setCourseData({ ...courseData, categoryId: data.id });
+            setNewCategoryName("");
+        } catch (error) {
+            console.error("Failed to add category", error);
+        }
     };
 
-    const [values, setValue] = React.useState();
+    const handleNext = () => setCurrentStep(currentStep + 1);
+    const handlePrev = () => setCurrentStep(currentStep - 1);
 
-    function onChange(e: any) {
-        setValue(e.target.value);
+    const updateList = (field: 'learningItems' | 'requirements', index: number, value: string) => {
+        const newList = [...courseData[field]];
+        newList[index] = value;
+        setCourseData({ ...courseData, [field]: newList });
     };
 
-    const [items, setItems] = useState<string[]>([]);
-
-    const addNewItem = () => {
-        setItems([...items, ""]);
+    const addListItem = (field: 'learningItems' | 'requirements') => {
+        setCourseData({ ...courseData, [field]: [...courseData[field], ""] });
     };
 
-    const updateItem = (index: number, value: string) => {
-        const newItems = [...items];
-        newItems[index] = value;
-        setItems(newItems);
+    const removeListItem = (field: 'learningItems' | 'requirements', index: number) => {
+        setCourseData({ ...courseData, [field]: courseData[field].filter((_, i) => i !== index) });
     };
 
-    const removeItem = (index: number) => {
-        setItems(items.filter((_, i) => i !== index));
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'image' | 'video') => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const { data } = await api.post('/upload', formData);
+            if (type === 'image') setCourseData({ ...courseData, imageUrl: data.url });
+            else setCourseData({ ...courseData, videoUrl: data.url });
+        } catch (error) {
+            console.error("Upload failed", error);
+        }
     };
 
-    const [showModal, setShowModal] = useState(false);
-    const videoUrl = 'https://www.youtube.com/embed/1trvO6dqQUI';
+    const handleSubmit = async () => {
+        setLoading(true);
+        try {
+            // 1. Create Course
+            const { data: course } = await api.post('/courses', { title: courseData.title });
 
-    const handleOpenModal = () => setShowModal(true);
-    const handleCloseModal = () => setShowModal(false)
+            // 2. Update Course Details
+            await api.patch(`/courses/${course.id}`, {
+                categoryId: courseData.categoryId,
+                description: courseData.description,
+                price: parseFloat(courseData.price),
+                imageUrl: courseData.imageUrl,
+                videoUrl: courseData.videoUrl,
+                language: courseData.language,
+                requirements: courseData.learningItems.concat(courseData.requirements),
+                faq: courseData.faq,
+                isPublished: true // Admin creates published by default or based on checkbox
+            });
+
+            // 3. Chapters & Lessons (Optional if implemented in full)
+            // For now, redirect or show success
+            document.getElementById('success-trigger')?.click();
+        } catch (error) {
+            console.error("Failed to submit course", error);
+            alert("Submission failed. Check console for details.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const [showVideoModal, setShowVideoModal] = useState(false);
 
     return (
         <>
             <div className="add-course-item">
                 <div className="wizard">
                     <ul className="form-wizard-steps" id="progressbar2">
-                        <li className={
-                            currentStep === 1
-                                ? 'progress-active'
-                                : currentStep > 1
-                                    ? 'progress-activated'
-                                    : ''
-                        }>
-                            <div className="profile-step">
-                                <span className="dot-active mb-2">
-                                    <span className="number">01</span>
-                                    <span className="tickmark">
-                                        <i className="fa-solid fa-check" />
+                        {[1, 2, 3, 4, 5].map((step) => (
+                            <li key={step} className={currentStep === step ? 'progress-active' : currentStep > step ? 'progress-activated' : ''}>
+                                <div className="profile-step">
+                                    <span className="dot-active mb-2">
+                                        <span className="number">0{step}</span>
+                                        <span className="tickmark"><i className="fa-solid fa-check" /></span>
                                     </span>
-                                </span>
-                                <div className="step-section">
-                                    <p>Course Information</p>
+                                    <div className="step-section">
+                                        <p>{["Information", "Media", "Curriculum", "Additional", "Pricing"][step - 1]}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li className={
-                            currentStep === 2
-                                ? 'progress-active'
-                                : currentStep > 2
-                                    ? 'progress-activated'
-                                    : ''
-                        }>
-                            <div className="profile-step">
-                                <span className="dot-active mb-2">
-                                    <span className="number">02</span>
-                                    <span className="tickmark">
-                                        <i className="fa-solid fa-check" />
-                                    </span>
-                                </span>
-                                <div className="step-section">
-                                    <p>Course Media</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li className={
-                            currentStep === 3
-                                ? 'progress-active'
-                                : currentStep > 3
-                                    ? 'progress-activated'
-                                    : ''
-                        }>
-                            <div className="profile-step">
-                                <span className="dot-active mb-2">
-                                    <span className="number">03</span>
-                                    <span className="tickmark">
-                                        <i className="fa-solid fa-check" />
-                                    </span>
-                                </span>
-                                <div className="step-section">
-                                    <p>Curriculam</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li className={
-                            currentStep === 4
-                                ? 'progress-active'
-                                : currentStep > 4
-                                    ? 'progress-activated'
-                                    : ''
-                        }>
-                            <div className="profile-step">
-                                <span className="dot-active mb-2">
-                                    <span className="number">04</span>
-                                    <span className="tickmark">
-                                        <i className="fa-solid fa-check" />
-                                    </span>
-                                </span>
-                                <div className="step-section">
-                                    <p>Additional information</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li className={
-                            currentStep === 5
-                                ? 'progress-active'
-                                : currentStep > 5
-                                    ? 'progress-activated'
-                                    : ''
-                        }>
-                            <div className="profile-step">
-                                <span className="dot-active mb-2">
-                                    <span className="number">05</span>
-                                    <span className="tickmark">
-                                        <i className="fa-solid fa-check" />
-                                    </span>
-                                </span>
-                                <div className="step-section">
-                                    <p>Pricing</p>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        ))}
                     </ul>
                 </div>
+
                 <div className="initialization-form-set">
                     {currentStep === 1 && (
-                        <fieldset className="form-inner wizard-form-card" id="first">
-                            <div className="title border-0 mb-3 p-0">
-                                <h5>Basic Information</h5>
-                            </div>
+                        <fieldset className="form-inner wizard-form-card" style={{ display: 'block' }}>
+                            <div className="title border-0 mb-3 p-0"><h5>Basic Information</h5></div>
                             <div className="row">
-                                <div className="col-md-12">
-                                    <div className="input-block">
-                                        <label className="form-label">
-                                            Course Title<span className="text-danger ms-1">*</span>
-                                        </label>
-                                        <input type="text" className="form-control" />
-                                    </div>
+                                <div className="col-md-12 mb-3">
+                                    <label className="form-label">Course Title<span className="text-danger">*</span></label>
+                                    <input type="text" className="form-control" value={courseData.title} onChange={(e) => setCourseData({ ...courseData, title: e.target.value })} />
                                 </div>
-                                <div className="col-md-4">
-                                    <div className="input-block">
-                                        <label className="form-label">
-                                            Course Category
-                                            <span className="text-danger ms-1">*</span>
-                                        </label>
-                                        <CustomSelect
-                                            options={CourseCategory}
-                                            className="select d-flex"
-                                            placeholder="Select"
-                                        />
-                                    </div>
+                                <div className="col-md-4 mb-3">
+                                    <label className="form-label d-flex justify-content-between">
+                                        Category <Link href="#" data-bs-toggle="modal" data-bs-target="#add-category-modal" className="text-primary text-sm">Add New</Link>
+                                    </label>
+                                    <CustomSelect
+                                        options={categories}
+                                        placeholder="Select Category"
+                                        defaultValue={categories.find(c => c.value === courseData.categoryId)}
+                                        onChange={(val: any) => setCourseData({ ...courseData, categoryId: val.value })}
+                                    />
                                 </div>
-                                <div className="col-md-4">
-                                    <div className="input-block">
-                                        <label className="form-label">
-                                            Course Level<span className="text-danger ms-1">*</span>
-                                        </label>
-                                        <CustomSelect
-                                            options={CourseLevel}
-                                            className="select d-flex"
-                                            placeholder="Select"
-                                        />
-                                    </div>
+                                <div className="col-md-4 mb-3">
+                                    <label className="form-label">Level</label>
+                                    <CustomSelect
+                                        options={CourseLevel}
+                                        defaultValue={CourseLevel.find(l => l.label === courseData.level)}
+                                        onChange={(val: any) => setCourseData({ ...courseData, level: val.label })}
+                                    />
                                 </div>
-                                <div className="col-md-4">
-                                    <div className="input-block">
-                                        <label className="form-label">
-                                            Language<span className="text-danger ms-1">*</span>
-                                        </label>
-                                        <CustomSelect
-                                            options={Language}
-                                            className="select d-flex"
-                                            placeholder="Select"
-                                        />
-                                    </div>
+                                <div className="col-md-4 mb-3">
+                                    <label className="form-label">Language</label>
+                                    <CustomSelect
+                                        options={Language}
+                                        defaultValue={Language.find(l => l.label === courseData.language)}
+                                        onChange={(val: any) => setCourseData({ ...courseData, language: val.label })}
+                                    />
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="input-block">
-                                        <label className="form-label">
-                                            Max Number of Students
-                                            <span className="text-danger ms-1">*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            className="form-control student-count"
-                                        />
-                                    </div>
+                                <div className="col-md-12 mb-3">
+                                    <label className="form-label">Description</label>
+                                    <DefaultEditor value={courseData.description} onChange={(e: any) => setCourseData({ ...courseData, description: e.target.value })} />
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="input-block">
-                                        <label className="form-label">
-                                            Public / Private Course
-                                            <span className="text-danger ms-1">*</span>
-                                        </label>
-                                        <CustomSelect
-                                            options={PrivateCourse}
-                                            className="select d-flex"
-                                            placeholder="Select"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="input-block">
-                                        <label className="form-label">
-                                            Short Description
-                                            <span className="text-danger ms-1">*</span>
-                                        </label>
-                                        <input type="text" className="form-control" />
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="input-block">
-                                        <label className="form-label">
-                                            Course Description
-                                            <span className="text-danger ms-1">*</span>
-                                        </label>
-                                        <div className="summernote">
-                                            <DefaultEditor value={values} onChange={onChange} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="bg-light border p-4 rounded-3">
-                                        <h6 className="mb-2">
-                                            What will students learn in your course?
-                                        </h6>
-                                        <div className="input-block" id="input-block">
-                                            <div className="d-flex align-items-center add-new-input">
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    defaultValue="Become a UX designer"
-                                                />
-                                                <Link href="#" className="link-trash">
-                                                    <i className="isax isax-trash" />
-                                                </Link>
-                                            </div>
-                                            <div id="input-block">
-                                                {items.map((item, index) => (
-                                                    <div key={index} className="d-flex align-items-center add-new-input">
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder="Enter new item"
-                                                            value={item}
-                                                            onChange={(e) => updateItem(index, e.target.value)}
-                                                        />
-                                                        <Link
-                                                            href="#"
-                                                            className="link-trash"
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                removeItem(index);
-                                                            }}
-                                                        >
-                                                            <i className="isax isax-trash"></i>
-                                                        </Link>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
 
-                                        <div className="d-flex align-items-center justify-content-end">
-                                            <Link
-                                                href="#"
-                                                className="d-flex align-items-center add-new-topic"
-                                                id="add-new-topic-btn"
-                                                onClick={addNewItem}
-                                            >
-                                                <i className="isax isax-add me-1" /> Add New Item
-                                            </Link>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="bg-light border p-4 rounded-3">
-                                        <h6 className="mb-2">Requirements</h6>
-                                        <div className="input-block">
-                                            <div className="d-flex align-items-center add-new-input">
-                                                <input type="text" className="form-control" />
-                                                <Link href="#" className="link-trash">
-                                                    <i className="isax isax-trash" />
-                                                </Link>
+                                <div className="col-md-6 mb-3">
+                                    <div className="bg-light border p-3 rounded">
+                                        <h6>What will students learn?</h6>
+                                        {courseData.learningItems.map((item, idx) => (
+                                            <div key={idx} className="d-flex mb-2">
+                                                <input type="text" className="form-control me-2" value={item} onChange={(e) => updateList('learningItems', idx, e.target.value)} />
+                                                <button className="btn btn-outline-danger btn-sm" onClick={() => removeListItem('learningItems', idx)}><i className="ti ti-trash" /></button>
                                             </div>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-end">
-                                            <Link
-                                                href="#"
-                                                className="d-flex align-items-center add-new-topic"
-                                            >
-                                                <i className="isax isax-add me-1" /> Add New Item
-                                            </Link>
-                                        </div>
+                                        ))}
+                                        <button className="btn btn-link p-0 text-primary" onClick={() => addListItem('learningItems')}>+ Add Item</button>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="form-check form-switch form-check-md mb-0 mt-3">
-                                        <input
-                                            className="form-check-input form-checked-success"
-                                            type="checkbox"
-                                            id="checkFeature"
-                                            defaultChecked
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="checkFeature"
-                                        >
-                                            Check this for featured course
-                                        </label>
+
+                                <div className="col-md-6 mb-3">
+                                    <div className="bg-light border p-3 rounded">
+                                        <h6>Requirements</h6>
+                                        {courseData.requirements.map((item, idx) => (
+                                            <div key={idx} className="d-flex mb-2">
+                                                <input type="text" className="form-control me-2" value={item} onChange={(e) => updateList('requirements', idx, e.target.value)} />
+                                                <button className="btn btn-outline-danger btn-sm" onClick={() => removeListItem('requirements', idx)}><i className="ti ti-trash" /></button>
+                                            </div>
+                                        ))}
+                                        <button className="btn btn-link p-0 text-primary" onClick={() => addListItem('requirements')}>+ Add Item</button>
                                     </div>
                                 </div>
                             </div>
-                            <div className="add-form-btn widget-next-btn submit-btn d-flex justify-content-end mb-0">
-                                <div className="btn-left">
-                                    <Link
-                                        href="#"
-                                        className="btn main-btn next_btns"
-                                        onClick={handleNext}
-                                    >
-                                        Next <i className="isax isax-arrow-right-3 ms-1" />
-                                    </Link>
-                                </div>
+                            <div className="d-flex justify-content-end mt-4">
+                                <button className="btn btn-primary" onClick={handleNext}>Next <i className="ti ti-arrow-narrow-right" /></button>
                             </div>
                         </fieldset>
-                    )
-                    }
+                    )}
+
                     {currentStep === 2 && (
                         <fieldset className="form-inner wizard-form-card" style={{ display: 'block' }}>
-                            <div className="title border-0 mb-3 p-0">
-                                <h5>Course Media</h5>
-                                <p>
-                                    Intro Course overview provider type. (.mp4, YouTube, Vimeo
-                                    etc.)
-                                </p>
-                            </div>
+                            <div className="title border-0 mb-3 p-0"><h5>Course Media</h5></div>
                             <div className="row">
-                                <div className="col-md-12">
-                                    <div className="input-block">
-                                        <div className="row align-items-center">
-                                            <div className="col-md-12">
-                                                <label className="form-label">
-                                                    Course Thumbnail
-                                                    <span className="text-danger ms-1">*</span>
-                                                </label>
-                                            </div>
-                                            <div className="col-md-10">
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="No File Selected"
-                                                />
-                                            </div>
-                                            <div className="col-md-2 d-grid">
-                                                <label
-                                                    htmlFor="file-upload"
-                                                    className="file-upload-btn text-center"
-                                                >
-                                                    Upload File
-                                                </label>
-                                                <input type="file" id="file-upload" name="file" />
-                                            </div>
-                                        </div>
+                                <div className="col-md-6 mb-3">
+                                    <label className="form-label">Course Thumbnail</label>
+                                    <div className="border p-4 text-center rounded bg-light position-relative">
+                                        {courseData.imageUrl ? (
+                                            <img src={courseData.imageUrl} className="img-fluid rounded mb-2" style={{ maxHeight: '150px' }} />
+                                        ) : (
+                                            <i className="ti ti-image fs-1 text-muted" />
+                                        )}
+                                        <input type="file" className="position-absolute top-0 start-0 w-100 h-100 opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'image')} />
+                                        <p className="mb-0 text-sm">Click to upload thumbnail</p>
                                     </div>
                                 </div>
-                                <div className="col-md-12">
-                                    <div
-                                        className="upload-img-section d-flex align-items-center justify-content-center"
-                                        id="upload-img-section"
-                                    >
-                                        <input
-                                            type="file"
-                                            id="upload-img-input"
-                                            style={{ display: "none" }}
-                                            accept="image/jpeg, image/png, image/gif, image/webp"
-                                        />
-                                        <div className="upload-content">
-                                            <span className="d-flex align-items-center justify-content-center mb-1">
-                                                <i className="isax isax-image5 text-secondary fs-24 text-center" />
-                                            </span>
-                                            <p className="text-center fw-medium mb-1">
-                                                Upload Image
-                                            </p>
-                                            <span className="text-center">
-                                                JPEG, PNG, GIF, and WebP formats, up to 2 MB
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <hr className="mt-4 mb-4" />
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="row">
-                                        <div className="col-md-4">
-                                            <div className="input-block-link">
-                                                <label className="form-label">
-                                                    Course Video
-                                                    <span className="text-danger ms-1">*</span>
-                                                </label>
-                                                <CustomSelect
-                                                    options={CourseVideo}
-                                                    className="select d-flex"
-                                                    placeholder="Select"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="col-md-8">
-                                            <div className="input-block-link">
-                                                <label className="form-label">&nbsp;</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="External URL Link"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="position-relative">
-                                        <Link
-                                            href="#"
-                                            id="openVideoBtn"
-                                            onClick={handleOpenModal}
-                                        >
-                                            <ImageWithBasePath
-                                                className="img-fluid rounded"
-                                                src="/assets/img/course/add-course-1.jpg"
-                                                alt="img"
-                                            />
-                                            <div className="play-icon">
-                                                <i className="fa-solid fa-play" />
-                                            </div>
-                                        </Link>
-                                    </div>
-                                    <div id="videoModal">
-                                        <div className="modal-content1">
-                                            <span className="close-btn" id="closeModal">
-                                                ×
-                                            </span>
-                                            <VideoModal show={showModal} handleClose={handleCloseModal} videoUrl={videoUrl} />
-                                        </div>
+                                <div className="col-md-6 mb-3">
+                                    <label className="form-label">Intro Video</label>
+                                    <input type="text" className="form-control mb-2" placeholder="Video URL" value={courseData.videoUrl} onChange={(e) => setCourseData({ ...courseData, videoUrl: e.target.value })} />
+                                    <div className="border p-2 rounded bg-light text-center">
+                                        <label className="btn btn-outline-secondary btn-sm w-100 mb-0">
+                                            Upload Video File
+                                            <input type="file" className="d-none" onChange={(e) => handleFileUpload(e, 'video')} />
+                                        </label>
                                     </div>
                                 </div>
                             </div>
-                            <div className="add-form-btn widget-next-btn submit-btn">
-                                <div className="btn-left">
-                                    <Link
-                                        href="#"
-                                        className="btn btn-light main-btn prev_btns d-flex align-items-center"
-                                        onClick={handlePrev}
-                                    >
-                                        <i className="isax isax-arrow-left-2 me-1" />
-                                        Prev
-                                    </Link>
-                                </div>
-                                <div className="btn-left">
-                                    <Link
-                                        href="#"
-                                        className="btn btn-secondary main-btn next_btns d-flex align-items-center"
-                                        onClick={handleNext}
-                                    >
-                                        Next <i className="isax isax-arrow-right-3 ms-1" />
-                                    </Link>
-                                </div>
+                            <div className="d-flex justify-content-between mt-4">
+                                <button className="btn btn-light" onClick={handlePrev}><i className="ti ti-arrow-narrow-left" /> Prev</button>
+                                <button className="btn btn-primary" onClick={handleNext}>Next <i className="ti ti-arrow-narrow-right" /></button>
                             </div>
                         </fieldset>
-                    )
-                    }
+                    )}
+
                     {currentStep === 3 && (
                         <fieldset className="form-inner wizard-form-card" style={{ display: 'block' }}>
-                            <div className="title border-0 mb-3 p-0">
-                                <div className="row align-items-center row-gap-2">
-                                    <div className="col-md-6">
-                                        <h5 className="mb-0">Curriculum</h5>
-                                    </div>
-                                    <div className="col-md-6 text-md-end">
-                                        <Link
-                                            href="#"
-                                            className="btn add-edit-btn d-inline-flex align-items-center"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#add-topic"
-                                        >
-                                            <i className="isax isax-add-circle5 me-1" /> Add New
-                                            Topic
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div
-                                    className="accordions-items-seperate"
-                                    id="accordionSpacingExample"
-                                >
-                                    <div className="accordion-item">
-                                        <h2 className="accordion-header" id="headingSpacingOne">
-                                            <Link
-                                                href="#"
-                                                className="accordion-button collapsed"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#SpacingOne"
-                                                aria-expanded="false"
-                                                aria-controls="SpacingOne"
-                                            >
-                                                <span className="d-flex align-items-center mb-0">
-                                                    <i className="isax isax-menu-15 me-2" />
-                                                    Introduction of Digital Marketing
-                                                </span>
-                                            </Link>
-                                        </h2>
-                                        <div
-                                            id="SpacingOne"
-                                            className="accordion-collapse collapse show"
-                                            aria-labelledby="headingSpacingOne"
-                                            data-bs-parent="#accordionSpacingExample"
-                                        >
-                                            <div className="accordion-body">
-                                                <div className="d-flex align-items-center justify-content-between bg-white p-2 border rounded-3 mb-3">
-                                                    <div className="d-flex align-items-center">
-                                                        <span>
-                                                            <i className="isax isax-play-circle5 text-success fs-24 me-1" />
-                                                        </span>
-                                                        <p className="fw-medium text-gray-5 mb-0">
-                                                            Describe SEO Engine
-                                                        </p>
-                                                    </div>
-                                                    <div className="d-flex align-items-center">
-                                                        <Link
-                                                            href="#"
-                                                            className="edit-btn1"
-                                                        >
-                                                            <i className="isax isax-edit-25 fs-16" />
-                                                        </Link>
-                                                        <Link
-                                                            href="#"
-                                                            className="delete-btn1"
-                                                        >
-                                                            <i className="isax isax-trash fs-16" />
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                                <div className="d-flex align-items-center justify-content-between bg-white p-2 border rounded-3 mb-3">
-                                                    <div className="d-flex align-items-center">
-                                                        <span>
-                                                            <i className="isax isax-play-circle5 text-success fs-24 me-1" />
-                                                        </span>
-                                                        <p className="fw-medium text-gray-5 mb-0">
-                                                            Know about all marketing
-                                                        </p>
-                                                    </div>
-                                                    <div className="d-flex align-items-center">
-                                                        <Link
-                                                            href="#"
-                                                            className="edit-btn1"
-                                                        >
-                                                            <i className="isax isax-edit-25 fs-16" />
-                                                        </Link>
-                                                        <Link
-                                                            href="#"
-                                                            className="delete-btn1"
-                                                        >
-                                                            <i className="isax isax-trash fs-16" />
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                                <div className="d-flex align-items-center justify-content-between">
-                                                    <div className="d-flex align-items-center">
-                                                        <Link
-                                                            href="#"
-                                                            className="btn add-edit-btn d-inline-flex align-items-center"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#add-lesson"
-                                                        >
-                                                            <i className="isax isax-add-circle5 me-2" />
-                                                            Add Lesson
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="add-form-btn widget-next-btn submit-btn">
-                                <div className="btn-left">
-                                    <Link
-                                        href="#"
-                                        className="btn btn-light main-btn prev_btns"
-                                        onClick={handlePrev}
-                                    >
-                                        <i className="isax isax-arrow-left-2 me-1" />
-                                        Prev
-                                    </Link>
-                                </div>
-                                <div className="btn-left">
-                                    <Link
-                                        href="#"
-                                        className="btn btn-secondary main-btn next_btns"
-                                        onClick={handleNext}
-                                    >
-                                        Next <i className="isax isax-arrow-right-3 ms-1" />
-                                    </Link>
-                                </div>
+                            <div className="title border-0 mb-3 p-0"><h5>Curriculum (Coming Soon)</h5></div>
+                            <p className="text-muted">You can manage full chapters and lessons after creating the course in the edit section.</p>
+                            <div className="d-flex justify-content-between mt-4">
+                                <button className="btn btn-light" onClick={handlePrev}><i className="ti ti-arrow-narrow-left" /> Prev</button>
+                                <button className="btn btn-primary" onClick={handleNext}>Next <i className="ti ti-arrow-narrow-right" /></button>
                             </div>
                         </fieldset>
-                    )
-                    }
+                    )}
+
                     {currentStep === 4 && (
                         <fieldset className="form-inner wizard-form-card" style={{ display: 'block' }}>
-                            <div className="title border-0 mb-3 p-0">
-                                <div className="row align-items-center row-gap-3">
-                                    <div className="col-md-9">
-                                        <h5 className="mb-0">FAQ’s</h5>
+                            <div className="title border-0 mb-3 p-0"><h5>FAQ & Additional Info</h5></div>
+                            <div className="mb-4">
+                                <h6>FAQs</h6>
+                                {courseData.faq.map((f, idx) => (
+                                    <div key={idx} className="border p-3 rounded mb-2 bg-light">
+                                        <input type="text" className="form-control mb-2" placeholder="Question" value={f.question} onChange={(e) => {
+                                            const newFaq = [...courseData.faq];
+                                            newFaq[idx].question = e.target.value;
+                                            setCourseData({ ...courseData, faq: newFaq });
+                                        }} />
+                                        <textarea className="form-control mb-2" placeholder="Answer" value={f.answer} onChange={(e) => {
+                                            const newFaq = [...courseData.faq];
+                                            newFaq[idx].answer = e.target.value;
+                                            setCourseData({ ...courseData, faq: newFaq });
+                                        }} />
+                                        <button className="btn btn-sm btn-danger" onClick={() => setCourseData({ ...courseData, faq: courseData.faq.filter((_, i) => i !== idx) })}>Remove FAQ</button>
                                     </div>
-                                    <div className="col-md-3 text-end">
-                                        <Link
-                                            href="#"
-                                            className="btn add-edit-btn d-inline-flex align-items-center"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#add-faq"
-                                        >
-                                            <i className="isax isax-add-circle5 me-1" /> Add New
-                                        </Link>
-                                    </div>
-                                </div>
+                                ))}
+                                <button className="btn btn-link p-0" onClick={() => setCourseData({ ...courseData, faq: [...courseData.faq, { question: "", answer: "" }] })}>+ Add FAQ</button>
                             </div>
-                            <div className="pb-3 border-bottom mb-3">
-                            </div>
-                            <div className="pb-3 border-bottom mb-3">
-                                <div className="input-block mb-0">
-                                    <label className="form-label">Tags</label>
-                                    <span className="fs-13 text-gray-6 mt-1 d-block">
-                                        Maximum of 14 keywords. Keywords should all be in
-                                        lowercase. e.g. javascript, react, marketing
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="input-block">
-                                <label className="form-label">Message to a reviewer</label>
-                                <textarea className="form-control" defaultValue={""} />
-                            </div>
-                            <div className="d-flex align-items-center">
-                                <div className="form-check form-check-md d-flex align-items-center">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        defaultValue=""
-                                        id="flexCheckChecked"
-                                        defaultChecked
-                                    />
-                                    <label
-                                        className="form-check-label ms-2"
-                                        htmlFor="flexCheckChecked"
-                                    >
-                                        Any images, sounds, or other assets that are not my own
-                                        work, have been appropriately licensed for use in the file
-                                        preview or main course. Other than these items, this work
-                                        is entirely my own and I have full rights to sell it here.
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="add-form-btn widget-next-btn submit-btn">
-                                <div className="btn-left">
-                                    <Link
-                                        href="#"
-                                        className="btn btn-light main-btn prev_btns"
-                                        onClick={handlePrev}
-                                    >
-                                        <i className="isax isax-arrow-left-2 me-1" />
-                                        Prev
-                                    </Link>
-                                </div>
-                                <div className="btn-left">
-                                    <Link
-                                        href="#"
-                                        className="btn btn-secondary main-btn next_btns"
-                                        onClick={handleNext}
-                                    >
-                                        Next <i className="isax isax-arrow-right-3 ms-1" />
-                                    </Link>
-                                </div>
+                            <div className="d-flex justify-content-between mt-4">
+                                <button className="btn btn-light" onClick={handlePrev}><i className="ti ti-arrow-narrow-left" /> Prev</button>
+                                <button className="btn btn-primary" onClick={handleNext}>Next <i className="ti ti-arrow-narrow-right" /></button>
                             </div>
                         </fieldset>
-                    )
-                    }
+                    )}
+
                     {currentStep === 5 && (
                         <fieldset className="form-inner wizard-form-card" style={{ display: 'block' }}>
-                            <div>
-                                <div className="d-flex align-items-center mb-3">
-                                    <div className="form-check form-check-md d-flex align-items-center">
-                                        <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            defaultValue=""
-                                            id="flexCheckChecked1"
-                                            defaultChecked
-                                        />
-                                        <label
-                                            className="form-check-label ms-2"
-                                            htmlFor="flexCheckChecked1"
-                                        >
-                                            Check if this is a free course
-                                        </label>
+                            <div className="title border-0 mb-3 p-0"><h5>Pricing</h5></div>
+                            <div className="bg-light border p-4 rounded text-center">
+                                <div className="form-check form-switch d-inline-block mb-3">
+                                    <input className="form-check-input" type="checkbox" checked={courseData.isFree} onChange={(e) => setCourseData({ ...courseData, isFree: e.target.checked })} />
+                                    <label className="form-check-label">This is a free course</label>
+                                </div>
+                                {!courseData.isFree && (
+                                    <div className="mt-3" style={{ maxWidth: '200px', margin: '0 auto' }}>
+                                        <label className="form-label">Price ($)</label>
+                                        <input type="number" className="form-control text-center" value={courseData.price} onChange={(e) => setCourseData({ ...courseData, price: e.target.value })} />
                                     </div>
-                                </div>
-                                <div className="input-block mb-2">
-                                    <label className="form-label">Course Price ($)</label>
-                                    <input type="text" className="form-control" />
-                                </div>
+                                )}
                             </div>
-                            <div className="add-form-btn widget-next-btn submit-btn">
-                                <div className="btn-left">
-                                    <Link
-                                        href="#"
-                                        className="btn btn-light main-btn prev_btns"
-                                        onClick={handlePrev}
-                                    >
-                                        <i className="isax isax-arrow-left-2 me-1" />
-                                        Prev
-                                    </Link>
-                                </div>
-                                <div className="btn-left">
-                                    <Link
-                                        href="#"
-                                        className="btn btn-secondary main-btn next_btns"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#success"
-                                    >
-                                        Submit Course
-                                    </Link>
-                                </div>
+                            <div className="d-flex justify-content-between mt-4">
+                                <button className="btn btn-light" onClick={handlePrev}><i className="ti ti-arrow-narrow-left" /> Prev</button>
+                                <button className="btn btn-secondary" onClick={handleSubmit} disabled={loading}>
+                                    {loading ? "Submitting..." : "Submit Course"}
+                                </button>
                             </div>
                         </fieldset>
-                    )
-                    }
+                    )}
                 </div>
             </div>
 
-            {/* Modals required by the wizard */}
-            {/* Add topic */}
-            <div className="modal fade" id="add-topic">
+            {/* Add Category Modal */}
+            <div className="modal fade" id="add-category-modal" tabIndex={-1}>
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5>Topic Name</h5>
-                            <button
-                                type="button"
-                                className="btn-close custom-btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            >
-                                <i className="isax isax-close-circle5" />
-                            </button>
+                            <h5>Add New Category</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form>
-                            <div className="modal-body">
-                                <div className="input-block">
-                                    <label className="form-label">
-                                        Add Name<span className="text-danger ms-1">*</span>
-                                    </label>
-                                    <input type="text" className="form-control" />
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn me-2 btn-light"
-                                    data-bs-dismiss="modal"
-                                >
-                                    Cancel
-                                </button>
-                                <button type="button" data-bs-dismiss="modal" className="btn btn-secondary">
-                                    Add New
-                                </button>
-                            </div>
-                        </form>
+                        <div className="modal-body">
+                            <input type="text" className="form-control" placeholder="Category Name" value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} />
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={handleAddCategory} data-bs-dismiss="modal">Add Category</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Add lesson */}
-            <div className="modal fade" id="add-lesson">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5>New Lesson</h5>
-                            <button
-                                type="button"
-                                className="btn-close custom-btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            >
-                                <i className="isax isax-close-circle5" />
-                            </button>
-                        </div>
-                        <form >
-                            <div className="modal-body">
-                                <div className="input-block mb-4">
-                                    <label className="form-label">
-                                        Add Lesson<span className="text-danger ms-1">*</span>
-                                    </label>
-                                    <input type="text" className="form-control" />
-                                </div>
-                                <div className="input-block mb-4">
-                                    <label className="form-label">
-                                        Video link<span className="text-danger ms-1">*</span>
-                                    </label>
-                                    <input type="text" className="form-control" />
-                                </div>
-                                <div className="input-block mb-4">
-                                    <label className="form-label">Course Description</label>
-                                    <textarea className="form-control" defaultValue={""} />
-                                </div>
-                                <div className="d-flex align-items-center">
-                                    <div className="form-check me-3">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="flexRadioDefault"
-                                            id="flexRadioDefault4"
-                                            defaultChecked
-                                        />
-                                        <label className="form-check-label" htmlFor="flexRadioDefault4">
-                                            free
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="flexRadioDefault"
-                                            id="flexRadioDefault5"
-                                        />
-                                        <label className="form-check-label" htmlFor="flexRadioDefault5">
-                                            Premium
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn me-2 btn-light"
-                                    data-bs-dismiss="modal"
-                                >
-                                    Cancel
-                                </button>
-                                <button type="button" data-bs-dismiss="modal" className="btn btn-secondary">
-                                    Add New
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            {/* Add Faq */}
-            <div className="modal fade" id="add-faq">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5>New FAQ</h5>
-                            <button
-                                type="button"
-                                className="btn-close custom-btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            >
-                                <i className="isax isax-close-circle5" />
-                            </button>
-                        </div>
-                        <form >
-                            <div className="modal-body">
-                                <div className="input-block mb-4">
-                                    <label className="form-label">
-                                        Question<span className="text-danger ms-1">*</span>
-                                    </label>
-                                    <input type="text" className="form-control" />
-                                </div>
-                                <div className="input-block mb-4">
-                                    <label className="form-label">
-                                        Answer<span className="text-danger ms-1">*</span>
-                                    </label>
-                                    <textarea className="form-control" defaultValue={""} />
-                                </div>
-                                <div className="d-flex align-items-center">
-                                    <div className="form-check me-3">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="flexRadioDefault"
-                                            id="flexRadioDefault6"
-                                            defaultChecked
-                                        />
-                                        <label className="form-check-label" htmlFor="flexRadioDefault6">
-                                            Enable
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="flexRadioDefault"
-                                            id="flexRadioDefault7"
-                                        />
-                                        <label className="form-check-label" htmlFor="flexRadioDefault7">
-                                            Disable
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn me-2 btn-light"
-                                    data-bs-dismiss="modal"
-                                >
-                                    Cancel
-                                </button>
-                                <button type="button" data-bs-dismiss="modal" className="btn btn-secondary">
-                                    Add New
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            {/* Success Trigger (Hidden) */}
+            <button id="success-trigger" className="d-none" data-bs-toggle="modal" data-bs-target="#success"></button>
 
             {/* Success Modal */}
             <div className="modal fade modal-default" id="success">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
-                        <div className="modal-body p-4">
-                            <div className="text-center">
-                                <div className="text-success h1 mb-2">
-                                    <i className="isax isax-tick-circle5" />
-                                </div>
-                                <h5 className="mb-2">Congratulations! Course Submitted</h5>
-                                <p className="mb-3">
-                                    You’ve successfully Submitted the Course & its under the
-                                    review.
-                                </p>
-                                <div className="d-flex align-items-center justify-content-center gap-2 flex-wrap">
-                                    <Link href="/admin" className="btn btn-secondary">
-                                        <i className="isax isax-arrow-left-2 me-1" />
-                                        Back to Dashboard
-                                    </Link>
-                                </div>
-                            </div>
+                        <div className="modal-body p-4 text-center">
+                            <div className="text-success h1 mb-2"><i className="ti ti-circle-check-filled" /></div>
+                            <h5 className="mb-2">Congratulations!</h5>
+                            <p className="mb-3">The course has been successfully created.</p>
+                            <Link href="/admin/courses" className="btn btn-secondary" data-bs-dismiss="modal">Back to Courses</Link>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <VideoModal show={showModal} handleClose={handleCloseModal} videoUrl={videoUrl} />
+            <VideoModal show={showVideoModal} handleClose={() => setShowVideoModal(false)} videoUrl={courseData.videoUrl} />
         </>
-    )
-}
+    );
+};
 
 export default AdminAddCourseComponent;
